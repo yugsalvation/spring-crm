@@ -3,6 +3,9 @@ package com.crm.project;
 import java.text.ParseException;
 import java.util.List;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -30,6 +33,14 @@ public class HomeController {
 	public String ShowIndexPage() {
 		
 		return "index";
+	}
+	
+	@RequestMapping("/logout")
+	public String ShowLogoutPage(HttpServletRequest request) {
+		 HttpSession httpSession = request.getSession();
+         httpSession.invalidate();
+         return "index";
+		
 	}
 	
 @Autowired
@@ -76,6 +87,7 @@ private OpportunityDao opportunitydao;
 @RequestMapping("/salesTakeOpportunity")
 public String ShowOpportunityPage(Model theModel,@ModelAttribute("leadid") String id,@ModelAttribute("id") String sid) throws Exception {
 	Leads l=leadsdao.getLead(id);
+	leadsdao.updateLead(id);
 	opportunitydao.addOpportunity(l,sid);
 	List<Opportunity> opp=opportunitydao.getOpportunities(sid);
 	theModel.addAttribute("myopp",opp);
@@ -106,6 +118,26 @@ public String ProcessUpdateOpportunityPage(@ModelAttribute("newopportunity") Opp
 	String oid=o.getOpportunityid();
 
 	opportunitydao.updateOpportunity(o,oid);
+	List<Opportunity> opp=opportunitydao.getOpportunities(sid);
+	theModel.addAttribute("myopp",opp);
+	
+	return "myOpportunities";
+}
+
+@RequestMapping("/dropopportunity")
+public String ShowDropOpportunityPage(Model theModel,@RequestParam("opportunityid")String id) {
+	
+	Opportunity o=opportunitydao.getOpportunity(id);
+	theModel.addAttribute("newopportunity",o);
+	return "dropopportunity";
+}
+
+@RequestMapping("/processdropopportunity")
+public String ProcessDropOpportunityPage(@ModelAttribute("newopportunity") Opportunity o,Model theModel,@ModelAttribute("id") String sid) {
+	
+	String oid=o.getOpportunityid();
+
+	opportunitydao.dropOpportunity(o,oid);
 	List<Opportunity> opp=opportunitydao.getOpportunities(sid);
 	theModel.addAttribute("myopp",opp);
 	
@@ -195,7 +227,7 @@ public String ProcessLeadPage(@ModelAttribute("newlead") Leads u,Model theModel,
 	salesuserdao.incrementleadnumber(minlead);
 	leadsdao.addLead(u);
 	List<Leads>l=leadsdao.getLeads(id); 
-	theModel.addAllAttributes(l);
+	theModel.addAttribute("leads",l);
 	return "lead";
 }
 

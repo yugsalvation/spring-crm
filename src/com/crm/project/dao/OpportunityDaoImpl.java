@@ -20,7 +20,7 @@ public class OpportunityDaoImpl implements OpportunityDao {
 	@Transactional
 	public List<Opportunity> getOpportunities(String id) {
 		Session currentSession=sessionFactory.getCurrentSession();
-		String query="from Opportunity o where o.suserid=\'"+id+"\'";
+		String query="from Opportunity o where o.suserid=\'"+id+"\' and dropp=0";
 		Query <Opportunity> theQuery=currentSession.createQuery(query,Opportunity.class);
 		List<Opportunity>o=theQuery.getResultList();
 		return o;
@@ -71,10 +71,20 @@ public class OpportunityDaoImpl implements OpportunityDao {
 	@Transactional
 	public void updateOpportunity(Opportunity o, String opportunityid) {
 		Session currentSession=sessionFactory.getCurrentSession();
-		String query="update Opportunity set probability1="+o.getProbability1()+",probability2="+o.getProbability2()+",description=\'"+o.getDescription()+"\' where opportunityid=\'"+opportunityid+"\'";
+		String query="update Opportunity set description=\'"+o.getDescription()+"\' where opportunityid=\'"+opportunityid+"\'";
 		Query theQuery=currentSession.createQuery(query);
 		int result=theQuery.executeUpdate();
 
+	}
+
+	@Override
+	@Transactional
+	public void dropOpportunity(Opportunity o, String opportunityid) {
+		Session currentSession=sessionFactory.getCurrentSession();
+		String query="update Opportunity set dropp=1,description=\'"+o.getDescription()+"\' where opportunityid=\'"+opportunityid+"\'";
+		Query theQuery=currentSession.createQuery(query);
+		int result=theQuery.executeUpdate();
+		
 	}
 
 }

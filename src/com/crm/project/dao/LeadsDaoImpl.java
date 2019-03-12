@@ -69,5 +69,15 @@ public class LeadsDaoImpl implements LeadsDao {
 		
 	}
 
+	@Override
+	@Transactional
+	public void updateLead(String leadid) {
+		Session currentSession=sessionFactory.getCurrentSession();
+		String query="update Leads set opp=1 where leadid=\'"+leadid+"\'";
+		Query theQuery=currentSession.createQuery(query);
+		int result=theQuery.executeUpdate();
+		
+	}
+
 	
 }

@@ -30,9 +30,9 @@ body{
 <label for="emailid">Email id:</label> <form:input class="form-control" path="emailid"/><br/>
 <label for="contact_number">Contact number:</label> <form:input class="form-control" type="tel" path="contact_number"/><br/>
 <label for="leadsource">Lead Source:</label> <form:input class="form-control" path="leadsource"/><br/>
-<label for="agentid">Lead Agent:</label> <form:input class="form-control" value= "${id}" path="agentid"/>
+<label for="agentid">Lead Agent:</label> <form:input class="form-control" value= "${id}" path="agentid" readonly="true"/><br/>
 <label for="city">City:</label> <form:input class="form-control" path="city"/><br/>
-<label for="opp">Opportunity</label> <form:input class="form-control" type="number"  path="opp"/>
+
 
 
 <br/>

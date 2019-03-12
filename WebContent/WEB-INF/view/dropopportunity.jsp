@@ -22,14 +22,14 @@ body{
 </head>
 <body >
 <div class="container-fluid">
-<form:form action="processupdateopportunity" modelAttribute="newopportunity" style="padding:2%">
+<form:form action="processdropopportunity" modelAttribute="newopportunity" style="padding:2%">
    <div class="form-group">
  
 <label for="names">Name:</label> <form:input class="form-control" path="names" readonly="true"/> 
 <label for="opportunityid">oid:</label> <form:input class="form-control" path="opportunityid" readonly="true"/> <br/>
 <label for="description">
 
-Description</label><br/><form:textarea rows="20" cols="90" path="description"/><br/>
+Reason</label><br/><form:textarea rows="20" cols="90" path="description"/><br/>
 
 <br/>
 

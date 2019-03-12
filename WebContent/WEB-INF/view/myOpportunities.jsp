@@ -40,15 +40,17 @@ body{
         <th>Email id</th>
         <th>Contact number</th>
         <th>City</th>
-        <th>Probability 1</th>
-        <th>Probability 2</th>
-        <th>update</th>
+        <th>Description</th>
+        <th></th>
       </tr>
     </thead>
     <tbody>
 
     <c:forEach var="opp" items="${myopp}">
     <c:url var="takeopp" value="/updateopportunity">
+    	<c:param name="opportunityid" value="${opp.opportunityid}"></c:param>
+    </c:url>
+    <c:url var="dropopp" value="/dropopportunity">
     	<c:param name="opportunityid" value="${opp.opportunityid}"></c:param>
     </c:url>
       <tr class="active">
@@ -58,12 +60,12 @@ body{
         <td>${opp.emailid}</td>
         <td>${opp.contact_number}</td>
         <td>${opp.city}</td>
-        <td>${opp.probability1}</td>
-        <td>${opp.probability2}</td>
         
-        <td class="noExl">
-        <a href="${takeopp}">update</a>
+        
+        <td>
+        <a href="${takeopp}">Add/View</a>
         </td>
+        <td> <a href="${dropopp}" onclick="return myFunction()">drop</a></td>
       </tr>
      </c:forEach>
     </tbody>
@@ -71,6 +73,16 @@ body{
   <br/>
 
   </div>
+	<script>
+function myFunction() {
+  var txt;
+  if (confirm("are you sure to drop opportunity?!")) {
+  
+  } else {
+	return false;
+  }
 
+}
+</script>
 </body>
 </html>

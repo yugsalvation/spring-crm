@@ -12,4 +12,5 @@ public interface LeadsDao {
 	public void addLead(Leads newLead) throws Exception;
 	public Leads getLead(String id);
 	public void updateLead(Leads l,String leadid);
+	public void updateLead(String leadid);
 }

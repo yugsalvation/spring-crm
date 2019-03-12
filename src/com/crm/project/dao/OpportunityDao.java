@@ -12,5 +12,6 @@ public interface OpportunityDao {
 	public void addOpportunity(Leads lead,String salesuserid) throws Exception;
 	public Opportunity getOpportunity(String id);
 	public void updateOpportunity(Opportunity o,String opportunityid);
+	public void dropOpportunity(Opportunity o,String opportunityid);
 	
 }

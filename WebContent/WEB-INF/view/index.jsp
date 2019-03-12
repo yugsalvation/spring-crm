@@ -38,7 +38,7 @@ body{
   <div class="container-fluid" >
    <div class="col-sm-4"></div>
  <div class="col-sm-4">
- <a href="saleslogin"> <h2 style="background-color:rgb(240, 255, 255,0.8);text-align:center;padding:10%;">Sales</h2></a>
+ <a href="saleslogin"> <h2 style="background-color:rgb(240, 255, 255,0.8);text-align:center;padding:10%;">Sales Employee</h2></a>
 </div>
 
 
@@ -60,7 +60,7 @@ body{
   <div class="container-fluid" >
    <div class="col-sm-4"></div>
  <div class="col-sm-4">
- <a href="leadagentlogin"> <h2 style="background-color:rgb(240, 255, 255,0.8);text-align:center;padding:10%">Tellecaller</h2>
+ <a href="leadagentlogin"> <h2 style="background-color:rgb(240, 255, 255,0.8);text-align:center;padding:10%">Lead Agent</h2>
 </a>
 </div>
 

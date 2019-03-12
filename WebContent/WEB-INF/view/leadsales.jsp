@@ -41,7 +41,7 @@ body{
         <th>Contact number</th>
         <th>City</th>
         <th>Lesad agent</th>
-        <th>Update</th>
+        <th></th>
       </tr>
     </thead>
     <tbody>
@@ -58,7 +58,7 @@ body{
         <td>${lead.contact_number}</td>
         <td>${lead.city}</td>
         <td>${lead.agentid}</td>
-        <td class="noExl">
+        <td>
         <a href="${takeopp}">Take Opportunity</a>
         </td>
       </tr>

@@ -46,7 +46,7 @@ function resizeIframe(iframeID)
     <ul class="nav navbar-nav">
       <li class="active"><a href="#">Home</a></li>
       <li><a href="javascript:loadFrame('SalesLeadPage')">Leads</a></li>
-       <li><a href="javascript:loadFrame('newPayment')">Payment</a></li>
+      <li><a href="javascript:loadFrame('newPayment')">Payment</a></li>
       <li><a href="javascript:loadFrame('customer')">Customers</a></li>
      
 	  <li><a href="javascript:loadFrame('salesMyOpportunities')">Opportunity</a></li>
@@ -55,7 +55,7 @@ function resizeIframe(iframeID)
     </ul>
     <ul class="nav navbar-nav navbar-right">
       
-      <li><a href="#"><span class="glyphicon glyphicon-log-out"></span> Logout</a></li>
+      <li><a href="http://localhost:8080/spring-crm/logout"><span class="glyphicon glyphicon-log-out"></span> Logout</a></li>
     </ul>
   </div>
 </nav>

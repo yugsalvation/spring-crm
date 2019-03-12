@@ -50,6 +50,17 @@ public class Opportunity {
 	@Column(name="emailid")	
 	private String emailid;
 	
+	@Column(name="dropp")	
+	private int dropp;
+	
+	public int getDropp() {
+		return dropp;
+	}
+
+	public void setDropp(int dropp) {
+		this.dropp = dropp;
+	}
+
 	public String getEmailid() {
 		return emailid;
 	}
