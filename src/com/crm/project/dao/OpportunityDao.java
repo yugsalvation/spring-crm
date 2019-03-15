@@ -13,5 +13,6 @@ public interface OpportunityDao {
 	public Opportunity getOpportunity(String id);
 	public void updateOpportunity(Opportunity o,String opportunityid);
 	public void dropOpportunity(Opportunity o,String opportunityid);
+	public void addSexeuser(String oid,String sexid);
 	
 }

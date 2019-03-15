@@ -42,6 +42,7 @@ body{
         <th>City</th>
         <th>Description</th>
         <th></th>
+        <th></th>
       </tr>
     </thead>
     <tbody>
@@ -53,6 +54,11 @@ body{
     <c:url var="dropopp" value="/dropopportunity">
     	<c:param name="opportunityid" value="${opp.opportunityid}"></c:param>
     </c:url>
+    
+      <c:url var="sendopp" value="/sendopportunity">
+    	<c:param name="opportunityid" value="${opp.opportunityid}"></c:param>
+    </c:url>
+    
       <tr class="active">
         <td>${opp.opportunityid} </td>
         <td>${opp.names}</td>
@@ -66,6 +72,7 @@ body{
         <a href="${takeopp}">Add/View</a>
         </td>
         <td> <a href="${dropopp}" onclick="return myFunction()">drop</a></td>
+      	<td><a href="${sendopp}">Send</a></td>
       </tr>
      </c:forEach>
     </tbody>

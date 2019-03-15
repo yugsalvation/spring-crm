@@ -49,7 +49,7 @@ body{
   <div class="container-fluid" >
    <div class="col-sm-4"></div>
  <div class="col-sm-4">
-  <a href="saleslogin"><h2 style="background-color:rgb(240, 255, 255,0.8);text-align:center;padding:10%">Sales Executive</h2>
+  <a href="salesexecutivelogin"><h2 style="background-color:rgb(240, 255, 255,0.8);text-align:center;padding:10%">Sales Executive</h2>
 </a>
 </div>
 

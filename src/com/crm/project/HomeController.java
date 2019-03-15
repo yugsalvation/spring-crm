@@ -19,11 +19,13 @@ import com.crm.project.dao.LeadAgentUserDao;
 
 import com.crm.project.dao.LeadsDao;
 import com.crm.project.dao.OpportunityDao;
+import com.crm.project.dao.SalesExecutiveuserDao;
 import com.crm.project.dao.SalesuserDao;
 import com.crm.project.entity.Lead;
 import com.crm.project.entity.LeadAgentUser;
 import com.crm.project.entity.Leads;
 import com.crm.project.entity.Opportunity;
+import com.crm.project.entity.SalesExecutiveuser;
 import com.crm.project.entity.Salesuser;
 
 @Controller
@@ -144,13 +146,47 @@ public String ProcessDropOpportunityPage(@ModelAttribute("newopportunity") Oppor
 	return "myOpportunities";
 }
 
+@RequestMapping("/sendopportunity")
+public String ShowSendOpportunityPage(Model theModel,@ModelAttribute("id") String sid,@RequestParam("opportunityid")String id) throws Exception {
+	
+	String seu=salesexecutiveuserdao.lessOppSalesExecutiveuser();
+	opportunitydao.addSexeuser(id,seu);
+	salesexecutiveuserdao.incrementoppnumber(seu);
+	List<Opportunity> opp=opportunitydao.getOpportunities(sid);
+	theModel.addAttribute("myopp",opp);
+	
+	return "myOpportunities";
+}
+
+
+@Autowired
+private SalesExecutiveuserDao salesexecutiveuserdao;
 @RequestMapping("/salesexecutivelogin")
 public String ShowSalesExecutiveLoginPage(Model theModel) {
-	SalesExecutiveLogin u=new SalesExecutiveLogin();
+	SalesExecutiveuser u=new SalesExecutiveuser();
 	theModel.addAttribute("salesexeuser",u);
 	return "salesexecutivelogin";
 }
 
+@RequestMapping("/SalesExecutivePage")
+
+public String SalesExecutivePage(@ModelAttribute("salesexeuser") SalesExecutiveuser seu, ModelMap theModel) {
+
+	String idseuser=salesexecutiveuserdao.getSalesExecutiveuser(seu.getUsername(), seu.getPassword());
+	
+	if(idseuser.equals("")) {
+		//u.setMessage("invalid");
+		return "salesexecutivelogin";
+		}
+	else {
+	
+		theModel.put("id",idseuser);
+		
+		
+		
+		return "salesexecutivehome";
+	}
+}
 
 @RequestMapping("/leadagentlogin")
 public String ShowLeadAgentLoginPage(Model theModel) {
@@ -202,14 +238,7 @@ public String processPage(@ModelAttribute("salesuser") SalesLogin u) {
 	}
 }
 
-@RequestMapping("/SalesExecutivePage")
-public String leadAgentPage(@ModelAttribute("salesexuser") SalesExecutiveLogin u) {
-	if(u.getUsername().equals("yug")) {return "salesexecutivehome";}
-	else {
-		u.setMessage("invalid");
-		return "salesexecutivelogin";
-	}
-}
+
 
 @RequestMapping("/addlead")
 public String ShowAddLeadPage(Model theModel) {

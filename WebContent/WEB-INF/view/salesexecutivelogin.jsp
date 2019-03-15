@@ -38,13 +38,13 @@ body{
    <div class="col-sm-4"></div>
  <div class="col-sm-4">
  
-<form:form action="salesexecutiveuser" modelAttribute="salesexuser" style="background-color:rgb(220,220,220,0.8);padding:10%;">
+<form:form action="SalesExecutivePage" modelAttribute="salesexeuser" style="background-color:rgb(220,220,220,0.8);padding:10%;">
    <div class="form-group">
 <label for="username">username:</label> <form:input class="form-control" path="username"/><br/>
 <label for="password">password:</label><form:input type="password" class="form-control" path="password"/> <br/>
 <div class="row" align="center">
 <button type="submit" class="btn">submit</button>
-<form:form action="salesexecutiveuser" modelAttribute="salesexuser">
+<form:form action="SalesExecutivePage" modelAttribute="salesexeuser">
 <button type="submit" class="btn">forgot password?</button>
 </form:form>
 </div>
@@ -52,7 +52,7 @@ body{
 </div>
 </form:form>
 
-${salesexuser.message}</div>
+</div>
 
 
   <div class="col-sm-4"></div>
