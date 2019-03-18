@@ -44,17 +44,21 @@ function resizeIframe(iframeID)
       <a class="navbar-brand" href="#">CRM systems</a>
     </div>
     <ul class="nav navbar-nav">
-      <li class="active"><a href="#">Home</a></li>
-      <li><a href="javascript:loadFrame('lead')">Prospective Customers</a></li>
+      <li class="active"><a href="javascript:loadFrame('salesexReminders')">Home</a></li>
+      <li><a href="javascript:loadFrame('salesexMyOpportunities')">Prospective Customers</a></li>
      
       <li><a href="javascript:loadFrame('customer')">My Customers</a></li>
+      
+      <li><a href="javascript:loadFrame('salesexTasks')">Tasks</a></li>
+      
+      <li><a href="javascript:loadFrame('salesexMyTasks')">My Tasks</a></li>
      
 	  <li><a href="#">Reports</a></li>
 	  	
     </ul>
     <ul class="nav navbar-nav navbar-right">
       
-      <li><a href="#"><span class="glyphicon glyphicon-log-out"></span> Logout</a></li>
+      <li><a href="http://localhost:8080/spring-crm/logout"><span class="glyphicon glyphicon-log-out"></span> Logout</a></li>
     </ul>
   </div>
 </nav>

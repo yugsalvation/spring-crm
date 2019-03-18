@@ -1,6 +1,9 @@
 package com.crm.project;
 
+import java.sql.Time;
 import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
@@ -21,12 +24,14 @@ import com.crm.project.dao.LeadsDao;
 import com.crm.project.dao.OpportunityDao;
 import com.crm.project.dao.SalesExecutiveuserDao;
 import com.crm.project.dao.SalesuserDao;
+import com.crm.project.dao.TasksDao;
 import com.crm.project.entity.Lead;
 import com.crm.project.entity.LeadAgentUser;
 import com.crm.project.entity.Leads;
 import com.crm.project.entity.Opportunity;
 import com.crm.project.entity.SalesExecutiveuser;
 import com.crm.project.entity.Salesuser;
+import com.crm.project.entity.Tasks;
 
 @Controller
 @SessionAttributes("id")
@@ -187,6 +192,67 @@ public String SalesExecutivePage(@ModelAttribute("salesexeuser") SalesExecutiveu
 		return "salesexecutivehome";
 	}
 }
+
+@RequestMapping("/salesexMyOpportunities")
+public String ShowSalesexOpportunityPage(Model theModel,@ModelAttribute("id") String seid) throws Exception {
+
+	List<Opportunity> opp=opportunitydao.getSexopportunity(seid);
+	theModel.addAttribute("myopp",opp);
+	
+	return "salesexopportunities";
+}
+
+@Autowired
+private TasksDao tasksdao;
+@RequestMapping("/addsalesextask")
+public String ShowAddSalesexTaskPage(Model theModel,@ModelAttribute("id") String seid,@RequestParam("opportunityid")String id) throws Exception {
+
+	Tasks t=new Tasks();
+	theModel.addAttribute("tasks",t);
+	Opportunity opp=opportunitydao.getOpportunity(id);
+	theModel.addAttribute("opp",opp);
+	return "addSalesexTask";
+}
+
+@RequestMapping("/processaddtask")
+public String ShowProcessAddTaskPage(Model theModel,@ModelAttribute("id") String seid,@ModelAttribute("tasks") Tasks t) throws Exception {
+
+	tasksdao.addSalesexTask(t);
+	List<Tasks> tasks=tasksdao.getSalesexTasks(seid);
+	theModel.addAttribute("tasks",tasks);
+	return "salesextasks";
+}
+
+@RequestMapping("/salesexTasks")
+public String ShowSalesexTasksPage(Model theModel,@ModelAttribute("id") String seid) throws Exception {
+	
+	List<Tasks> tasks=tasksdao.getSalesexTasks(seid);
+	theModel.addAttribute("tasks",tasks);
+	
+	return "salesextasks";
+}
+
+@RequestMapping("/updatetask")
+public String ShowUpdateTaskPage(Model theModel,@RequestParam("taskid")int tid) {
+	
+	
+	Tasks t=tasksdao.getTask(tid);
+	theModel.addAttribute("newtask",t);
+	return "updatetask";
+}
+
+@RequestMapping("/processupdatetask")
+public String ProcessUpdateTaskPage(@ModelAttribute("newtask") Tasks t,Model theModel,@ModelAttribute("id") String seid) {
+	
+	int tid=t.getIdtasks();
+	tasksdao.updateTask(tid, t);
+	List<Tasks> tasks=tasksdao.getSalesexTasks(seid);
+	theModel.addAttribute("tasks",tasks);
+
+	
+	return "salesextasks";
+}
+
 
 @RequestMapping("/leadagentlogin")
 public String ShowLeadAgentLoginPage(Model theModel) {

@@ -1,5 +1,6 @@
 package com.crm.project.dao;
 
+import java.text.SimpleDateFormat;
 import java.util.List;
 
 import org.hibernate.Session;
@@ -51,7 +52,8 @@ public class OpportunityDaoImpl implements OpportunityDao {
 		newOpportunity.setSuserid(salesuserid);
 		newOpportunity.setOpportunityid("hello");
 		java.util.Date date=new java.util.Date();
-		java.sql.Date doc=new java.sql.Date(date.getDate());
+		SimpleDateFormat formatter=new SimpleDateFormat("yyyy-MM-dd");
+		java.sql.Date doc=java.sql.Date.valueOf(formatter.format(date));
 		newOpportunity.setDoc(doc);
 		currentSession.save(newOpportunity);
 
