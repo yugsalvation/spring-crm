@@ -5,7 +5,14 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
+import java.util.Properties;
 
+import javax.ejb.EJB;
+import javax.mail.Message;
+import javax.mail.Session;
+import javax.mail.Transport;
+import javax.mail.internet.InternetAddress;
+import javax.mail.internet.MimeMessage;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
@@ -17,6 +24,7 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.SessionAttributes;
+
 
 import com.crm.project.dao.LeadAgentUserDao;
 
@@ -32,6 +40,8 @@ import com.crm.project.entity.Opportunity;
 import com.crm.project.entity.SalesExecutiveuser;
 import com.crm.project.entity.Salesuser;
 import com.crm.project.entity.Tasks;
+import com.crm.project.sessionbean.Email;
+
 
 @Controller
 @SessionAttributes("id")
@@ -253,6 +263,80 @@ public String ProcessUpdateTaskPage(@ModelAttribute("newtask") Tasks t,Model the
 	return "salesextasks";
 }
 
+
+
+@RequestMapping("/salesexMyTasks")
+public String ShowSalesexMyTasksPage(Model theModel,@ModelAttribute("id") String seid) throws Exception {
+	
+	List<Tasks> tasks=tasksdao.getSalesexmyTasks(seid);
+	theModel.addAttribute("tasks",tasks);
+	
+	return "mytasks";
+}
+
+@RequestMapping("/sendEmail")
+public String ShowSendEmailPage(Model theModel,@ModelAttribute("id") String seid,@RequestParam("taskid")int tid) {
+	
+	Tasks t=tasksdao.getTask(tid);
+	Opportunity o=opportunitydao.getOpportunity(t.getOid());
+	String to=o.getEmailid();
+	
+	Emails e1=new Emails();
+	e1.setTo1(to);
+	e1.setTaskid(tid);
+	theModel.addAttribute("emails",e1);
+	
+	return "email";
+}
+
+
+@RequestMapping("/processemail")
+public String ShowProcessEmailPage(Model theModel,@ModelAttribute("id") String seid,@ModelAttribute("emails") Emails e1) {
+	
+	try {
+		Properties props=System.getProperties();
+		String to=e1.getTo1();
+		String subject=e1.getSubject();
+		String message=e1.getMessage();
+		message = message.replace("\n", "<br/>");
+			
+			Emails e2=salesexecutiveuserdao.getEmailsid(seid);
+			e1.setFrom(e2.getFrom());
+			e1.setUsername(e2.getUsername());
+			e1.setPassword(e2.getPassword());
+			String username=e1.getUsername();
+			String password=e1.getPassword();
+			String from=e1.getFrom();
+		props.put("mail.smtp.host","smtp.gmail.com");
+		props.put("mail.smtp.auth","true");
+		props.put("mail.smtp.port","465");
+		props.put("mail.smtp.socketFactory.class","javax.net.ssl.SSLSocketFactory");
+		props.put("mail.smtp.socketFactory.port","465");
+		props.put("mail.smtp.socketFactory.fallback","false");
+		Session mailSession=Session.getDefaultInstance(props,null);
+		mailSession.setDebug(true);
+		Message mailMessage=new MimeMessage(mailSession);
+		mailMessage.setFrom(new InternetAddress(from));
+		mailMessage.setRecipient(Message.RecipientType.TO, new InternetAddress(to));
+		mailMessage.setContent(message,"text/html");
+		mailMessage.setSubject(subject);
+		Transport transport=mailSession.getTransport("smtp");
+		transport.connect("smtp.gmail.com",username,password);
+		transport.sendMessage(mailMessage,mailMessage.getAllRecipients());
+		
+		
+		}
+		catch(Exception e)
+		{
+			System.out.println(e);
+		}
+		
+		tasksdao.sendReminderTask(e1.getTaskid());
+		List<Tasks> tasks=tasksdao.getSalesexmyTasks(seid);
+		theModel.addAttribute("tasks",tasks);
+		
+		return "mytasks";
+}
 
 @RequestMapping("/leadagentlogin")
 public String ShowLeadAgentLoginPage(Model theModel) {

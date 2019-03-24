@@ -52,6 +52,7 @@ function resizeIframe(iframeID)
       <li><a href="javascript:loadFrame('salesexTasks')">Tasks</a></li>
       
       <li><a href="javascript:loadFrame('salesexMyTasks')">My Tasks</a></li>
+      <li><a href="javascript:loadFrame('sendEmail')">Send Email</a></li>
      
 	  <li><a href="#">Reports</a></li>
 	  	

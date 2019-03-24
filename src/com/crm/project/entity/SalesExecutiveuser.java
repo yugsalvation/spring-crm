@@ -43,6 +43,28 @@ public class SalesExecutiveuser {
 
 	@Column(name="oppnumber")
 	private int oppnumber;
+	
+	@Column(name="useremail")
+	private String useremail;
+	
+	@Column(name="emailpassword")
+	private String emailpassword;
+
+	public String getUseremail() {
+		return useremail;
+	}
+
+	public void setUseremail(String useremail) {
+		this.useremail = useremail;
+	}
+
+	public String getEmailpassword() {
+		return emailpassword;
+	}
+
+	public void setEmailpassword(String emailpassword) {
+		this.emailpassword = emailpassword;
+	}
 
 	public String getIdseuser() {
 		return idseuser;

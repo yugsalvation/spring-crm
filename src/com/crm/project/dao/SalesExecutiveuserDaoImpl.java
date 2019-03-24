@@ -1,5 +1,7 @@
 package com.crm.project.dao;
 
+import javax.ejb.EJB;
+import javax.ejb.Stateless;
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Root;
@@ -11,7 +13,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.crm.project.Emails;
 import com.crm.project.entity.SalesExecutiveuser;
+import com.crm.project.sessionbean.Email;
 
 
 @Repository
@@ -61,5 +65,24 @@ Session currentSession=sessionFactory.getCurrentSession();
 		int result=thequery.executeUpdate();
 
 	}
+	
+	
+
+	@Override
+	@Transactional
+	public Emails getEmailsid(String id) {
+		Session currentSession=sessionFactory.getCurrentSession();
+		String query="from SalesExecutiveuser seu where seu.idseuser="+"\'"+id+"\'";
+		Query<SalesExecutiveuser> theQuery=currentSession.createQuery(query,SalesExecutiveuser.class);
+		SalesExecutiveuser usr=theQuery.getSingleResult();
+		Emails e=new Emails();
+		e.setFrom(usr.getEmailid());
+		e.setUsername(usr.getUseremail());
+		e.setPassword(usr.getEmailpassword());
+		
+		return e;
+	}
+	
+	
 
 }

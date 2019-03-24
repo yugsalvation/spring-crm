@@ -1,5 +1,6 @@
 package com.crm.project.dao;
 
+import java.sql.Date;
 import java.text.SimpleDateFormat;
 import java.util.List;
 
@@ -32,6 +33,16 @@ public class OpportunityDaoImpl implements OpportunityDao {
 	public List<Opportunity> getSexopportunity(String id) {
 		Session currentSession=sessionFactory.getCurrentSession();
 		String query="from Opportunity o where o.sexuserid=\'"+id+"\'";
+		Query <Opportunity> theQuery=currentSession.createQuery(query,Opportunity.class);
+		List<Opportunity>o=theQuery.getResultList();
+		return o;
+	}
+	
+	@Override
+	@Transactional
+	public List<Opportunity> getSexDateopportunity(String id, Date from, Date to) {
+		Session currentSession=sessionFactory.getCurrentSession();
+		String query="from Opportunity o where o.sexuserid=\'"+id+"\' and doc BETWEEN \'"+from+"\' and \'"+to+"\'";
 		Query <Opportunity> theQuery=currentSession.createQuery(query,Opportunity.class);
 		List<Opportunity>o=theQuery.getResultList();
 		return o;
@@ -98,5 +109,7 @@ public class OpportunityDaoImpl implements OpportunityDao {
 		int result=theQuery.executeUpdate();
 		
 	}
+
+	
 
 }
