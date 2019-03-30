@@ -32,7 +32,7 @@ public class OpportunityDaoImpl implements OpportunityDao {
 	@Transactional
 	public List<Opportunity> getSexopportunity(String id) {
 		Session currentSession=sessionFactory.getCurrentSession();
-		String query="from Opportunity o where o.sexuserid=\'"+id+"\'";
+		String query="from Opportunity o where o.sexuserid=\'"+id+"\' and customer=0";
 		Query <Opportunity> theQuery=currentSession.createQuery(query,Opportunity.class);
 		List<Opportunity>o=theQuery.getResultList();
 		return o;
@@ -42,7 +42,7 @@ public class OpportunityDaoImpl implements OpportunityDao {
 	@Transactional
 	public List<Opportunity> getSexDateopportunity(String id, Date from, Date to) {
 		Session currentSession=sessionFactory.getCurrentSession();
-		String query="from Opportunity o where o.sexuserid=\'"+id+"\' and doc BETWEEN \'"+from+"\' and \'"+to+"\'";
+		String query="from Opportunity o where customer=0 and o.sexuserid=\'"+id+"\' and doc BETWEEN \'"+from+"\' and \'"+to+"\'";
 		Query <Opportunity> theQuery=currentSession.createQuery(query,Opportunity.class);
 		List<Opportunity>o=theQuery.getResultList();
 		return o;
@@ -56,6 +56,7 @@ public class OpportunityDaoImpl implements OpportunityDao {
 		
 		newOpportunity.setLid(lead.getLeadid());
 		newOpportunity.setNames(lead.getNames());
+		newOpportunity.setNames2(lead.getNames2());
 		newOpportunity.setCity(lead.getCity());
 		newOpportunity.setContact_number(lead.getContact_number());
 		newOpportunity.setWalking_date(lead.getWalking_date());
@@ -105,6 +106,16 @@ public class OpportunityDaoImpl implements OpportunityDao {
 	public void addSexeuser(String oid, String sexid) {
 		Session currentSession=sessionFactory.getCurrentSession();
 		String query="update Opportunity set sexuserid=\'"+sexid+"\' where opportunityid=\'"+oid+"\'";
+		Query theQuery=currentSession.createQuery(query);
+		int result=theQuery.executeUpdate();
+		
+	}
+
+	@Override
+	@Transactional
+	public void addCustomer(String oid) {
+		Session currentSession=sessionFactory.getCurrentSession();
+		String query="update Opportunity set customer=1 where opportunityid=\'"+oid+"\'";
 		Query theQuery=currentSession.createQuery(query);
 		int result=theQuery.executeUpdate();
 		

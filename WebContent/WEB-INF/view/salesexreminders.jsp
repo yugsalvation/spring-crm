@@ -28,57 +28,45 @@ body{
 }
 </style>
 </head>
-<script type="text/javascript">
-function Export() {
-	$(function() {
-		$("#table2excel").table2excel({
-			exclude: ".noExl",
-			name: "Excel Document Name",
-			filename: "myFileName" + new Date().toISOString().replace(/[\-\:\.]/g, ""),
-			fileext: ".xls",
-			exclude_img: true,
-			exclude_links: true,
-			
-		});
-	});
-}
-	
-	
-	
 
-</script>
 <body >
  <div class="container-fluid">
- <table class="table" style="margin-top:15%" id="table2excel" >
+ <table class="table" style="margin-top:15%" >
     <thead>
       <tr class="active">
-        <th>Lead id</th>
+        <th>Opportunity id</th>
         <th>Name</th>
-        <th>Walking date</th>
-        <th>Email id</th>
-        <th>Contact number</th>
-        <th>City</th>
-        <th>Sales user</th>
-        <th>Update</th>
+        <th>DOC</th>
+     
+        <th>DOM</th>
+        <th>TOM</th>
+        <th></th>
+       	
       </tr>
     </thead>
     <tbody>
 
-    <c:forEach var="lead" items="${leads}">
-    <c:url var="updateLink" value="/updatelead">
-    	<c:param name="leadid" value="${lead.leadid}"></c:param>
+    <c:forEach var="reminders" items="${reminders}">
+    <c:url var="send" value="/addCustomer">
+    	<c:param name="oppid" value="${reminders.oid}"></c:param>
+    	
     </c:url>
+
+    
       <tr class="active">
-        <td>${lead.leadid} </td>
-        <td>${lead.names} ${lead.names2}</td>
-        <td>${lead.walking_date}</td>
-        <td>${lead.emailid}</td>
-        <td>${lead.contact_number}</td>
-        <td>${lead.city}</td>
-        <td>${lead.leadsuserid}</td>
-        <td class="noExl">
-        <a href="${updateLink}">update</a>
+      	<td>${reminders.oid}</td>
+        <td>${reminders.names} </td>
+        <td>${reminders.doc}</td>
+    
+        <td>${reminders.dom}</td>
+        <td>${reminders.tom}</td>
+      
+        
+        
+        <td>
+        <a href="${send}">Add Customer</a>
         </td>
+      
       </tr>
      </c:forEach>
     </tbody>
@@ -86,6 +74,6 @@ function Export() {
   <br/>
 
   </div>
-<input type="button" id="btnExport" value="Export" onclick="Export()" />
+
 </body>
 </html>

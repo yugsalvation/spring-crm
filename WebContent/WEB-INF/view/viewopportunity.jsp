@@ -35,6 +35,13 @@ Description</label><br/><form:textarea rows="20" cols="90" path="description"/><
 <br/>
 
 <button type="submit" class="btn" style="background-color:rgb(0,0,0,0.8); color:white">Done</button>
+ <c:url var="back" value="/salesexMyOpportunities">
+    	
+    </c:url>
+&emsp; <a href="${back}" class="btn" role="button" style="background-color:rgb(0,0,0,0.8); color:white">Back</a>
+
+
+
 </div>
 </form:form>
 </div>

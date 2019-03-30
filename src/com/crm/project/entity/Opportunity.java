@@ -38,6 +38,28 @@ public class Opportunity {
 	@Column(name="names")	
 	private String names;
 	
+	@Column(name="names2")	
+	private String names2;
+	
+	@Column(name="customer")	
+	private int customer;
+	
+	public int getCustomer() {
+		return customer;
+	}
+
+	public void setCustomer(int customer) {
+		this.customer = customer;
+	}
+
+	public String getNames2() {
+		return names2;
+	}
+
+	public void setNames2(String names2) {
+		this.names2 = names2;
+	}
+
 	@Column(name="contact_number")	
 	private long contact_number;
 	

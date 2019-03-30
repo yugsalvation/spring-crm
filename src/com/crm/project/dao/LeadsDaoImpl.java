@@ -63,7 +63,7 @@ public class LeadsDaoImpl implements LeadsDao {
 	public void updateLead(Leads l,String leadid)
 	{
 		Session currentSession=sessionFactory.getCurrentSession();
-		String query="update Leads set names=\'"+l.getNames()+"\',walking_date=\'"+l.getWalking_date()+"\',emailid=\'"+l.getEmailid()+"\',contact_number="+l.getContact_number()+",city=\'"+l.getCity()+"\' where leadid=\'"+leadid+"\'";
+		String query="update Leads set names=\'"+l.getNames()+"\',names2=\'"+l.getNames2()+"\',walking_date=\'"+l.getWalking_date()+"\',emailid=\'"+l.getEmailid()+"\',contact_number="+l.getContact_number()+",city=\'"+l.getCity()+"\' where leadid=\'"+leadid+"\'";
 		Query theQuery=currentSession.createQuery(query);
 		int result=theQuery.executeUpdate();
 		

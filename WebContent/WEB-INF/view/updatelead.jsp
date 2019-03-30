@@ -25,7 +25,8 @@ body{
 <form:form action="processupdatelead" modelAttribute="newlead" style="padding:2%">
    <div class="form-group">
     
-<label for="names">Name:</label> <form:input class="form-control" path="names"/><br/>
+<label for="names">First Name:</label> <form:input class="form-control" path="names"/><br/>
+<label for="names2">Last Name:</label> <form:input class="form-control" path="names2"/><br/>
 <label for="walking_date">Walking date:</label><form:input type="date"  class="form-control" path="walking_date" /> <br/>
 <label for="emailid">Email id:</label> <form:input class="form-control" path="emailid"/><br/>
 <label for="contact_number">Contact number:</label> <form:input class="form-control" type="tel" path="contact_number"/><br/>

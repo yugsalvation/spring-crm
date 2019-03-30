@@ -47,7 +47,7 @@ function resizeIframe(iframeID)
       <li class="active"><a href="javascript:loadFrame('salesexReminders')">Home</a></li>
       <li><a href="javascript:loadFrame('salesexMyOpportunities')">Prospective Customers</a></li>
      
-      <li><a href="javascript:loadFrame('customer')">My Customers</a></li>
+      <li><a href="javascript:loadFrame('mySalesexCustomers')">My Customers</a></li>
       
       <li><a href="javascript:loadFrame('salesexTasks')">Tasks</a></li>
       

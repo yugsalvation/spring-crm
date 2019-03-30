@@ -52,7 +52,7 @@ body{
     </c:url>
       <tr class="active">
         <td>${lead.leadid} </td>
-        <td>${lead.names}</td>
+        <td>${lead.names} ${lead.names2}</td>
         <td>${lead.walking_date}</td>
         <td>${lead.emailid}</td>
         <td>${lead.contact_number}</td>

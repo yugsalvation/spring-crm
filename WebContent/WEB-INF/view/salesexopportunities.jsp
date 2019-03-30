@@ -30,8 +30,23 @@ body{
 </head>
 
 <body >
+
+ <div class="container-fluid" style="margin-top:10%;text-align:center">
+ 
+ <form class="form-inline" action="salesexSearchOpportunity" >
+  <div class="form-group">
+    
+    <input type="text" class="form-control" name="oid" placeholder="oid">
+  </div>
+  
+
+  <button type="submit" class="btn btn-default">Search</button>
+</form>
+ 
+ </div>
+
  <div class="container-fluid">
- <table class="table" style="margin-top:15%" >
+ <table class="table" style="margin-top:5%" >
     <thead>
       <tr class="active">
         <th>oid</th>
@@ -61,7 +76,7 @@ body{
     
       <tr class="active">
         <td>${opp.opportunityid} </td>
-        <td>${opp.names}</td>
+        <td>${opp.names} ${opp.names2}</td>
         <td>${opp.walking_date}</td>
         <td>${opp.emailid}</td>
         <td>${opp.contact_number}</td>

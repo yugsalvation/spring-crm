@@ -22,17 +22,27 @@ body{
 </head>
 <body >
 <div class="container-fluid">
-<form:form action="processPage" modelAttribute="newcustomer" style="padding:2%">
+<form:form action="processAddCustomer" modelAttribute="newcustomer" style="padding:2%">
    <div class="form-group">
-<label for="fname">First Name:</label> <form:input class="form-control" path="fname"/><br/>
-<label for="lname">Last Name:</label> <form:input class="form-control" path="lname"/><br/>
-<label for="signupdate">Sign Up Date:</label><form:input type="date" class="form-control" path="signUpDate"/> <br/>
-<label for="phone">Phone Number:</label> <form:input class="form-control" path="phone"/><br/>
-<label for="address">Address:</label> <form:input class="form-control" path="address"/><br/>
-<label for="branch">Branch:</label> <form:input class="form-control" path="branch"/><br/>
-<label for="customeragent">Customer Agent:</label> <form:input class="form-control" path="customerAgent"/><br/>
-<label for="offercode">Name:</label> <form:input class="form-control" path="offerCode"/><br/>
-<button type="submit" class="btn" style="background-color:rgb(0,0,0,0.8); color:white">Create Customer</button>
+    
+<label for="fname">First Name:</label> <form:input class="form-control" path="fname" value='${newcustomer.fname}' /><br/>
+<label for="lname">Last Name:</label> <form:input class="form-control" path="lname" value='${newcustomer.lname}'/><br/>
+<label for="signup_date">Signup date:</label><form:input type="date"  class="form-control" path="signupdate" value='${newcustomer.signupdate}'/> <br/>
+<label for="emailid">Email id:</label> <form:input class="form-control" path="emailid" value='${newcustomer.emailid}'/><br/>
+<label for="address1">address line 1:</label> <form:input class="form-control" path="address1"/><br/>
+<label for="address2">address line 2:</label> <form:input class="form-control" path="address2"/><br/>
+<label for="city">City:</label> <form:input class="form-control" path="city"/><br/>
+<label for="addressproof">address proof:</label> <form:input class="form-control" path="addressproof"/><br/>
+<label for="contact_number">Contact number:</label> <form:input class="form-control" type="tel" path="contact_number" value='${newcustomer.contact_number}'/><br/>
+ <form:input class="form-control" path="salesuserid" type="hidden" value='${newcustomer.salesuserid}'/><br/>
+ <form:input class="form-control" path="seuserid" type="hidden" value='${newcustomer.seuserid}'/><br/>
+  <form:input class="form-control" path="oppid" type="hidden" value='${newcustomer.oppid}'/><br/>
+
+
+
+<br/>
+
+<button type="submit" class="btn" style="background-color:rgb(0,0,0,0.8); color:white">Create Lead</button>
 </div>
 </form:form>
 </div>

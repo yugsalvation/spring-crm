@@ -78,7 +78,7 @@ public class TasksDaoImpl implements TasksDao {
 		SimpleDateFormat formatter=new SimpleDateFormat("yyyy-MM-dd");
 		java.sql.Date doc=java.sql.Date.valueOf(formatter.format(date));
 		Session currentSession=sessionFactory.getCurrentSession();
-		String query="from Tasks t where t.suser=\'"+suserid+"\' and t.dom=\'"+doc+"\'";
+		String query="from Tasks t where t.suser=\'"+suserid+"\' and t.dom>=\'"+doc+"\'";
 		Query <Tasks> theQuery=currentSession.createQuery(query,Tasks.class);
 		List<Tasks>t=theQuery.getResultList();
 		return t;
@@ -114,7 +114,7 @@ public class TasksDaoImpl implements TasksDao {
 		SimpleDateFormat formatter=new SimpleDateFormat("yyyy-MM-dd");
 		java.sql.Date doc=java.sql.Date.valueOf(formatter.format(date));
 		Session currentSession=sessionFactory.getCurrentSession();
-		String query="from Tasks t where t.seuser=\'"+seuserid+"\' and t.dom=\'"+doc+"\' and completed=0 and dropp=0 and reminder=1";
+		String query="from Tasks t where t.seuser=\'"+seuserid+"\' and t.dom>=\'"+doc+"\' and completed=0 and dropp=0 and reminder=1";
 		Query <Tasks> theQuery=currentSession.createQuery(query,Tasks.class);
 		List<Tasks>t=theQuery.getResultList();
 		return t;
@@ -134,7 +134,7 @@ public class TasksDaoImpl implements TasksDao {
 	@Transactional
 	public void completeTask(int taskid) {
 		Session currentSession=sessionFactory.getCurrentSession();
-		String query="update Tasks set completed=1 where idtasks=\'"+taskid+"\'";
+		String query="update Tasks set completed=1 where dropp=0 and idtasks="+taskid;
 		Query theQuery=currentSession.createQuery(query);
 		int result=theQuery.executeUpdate();
 
@@ -144,7 +144,7 @@ public class TasksDaoImpl implements TasksDao {
 	@Transactional
 	public void sendReminderTask(int taskid) {
 		Session currentSession=sessionFactory.getCurrentSession();
-		String query="update Tasks set reminder=1 where idtasks=\'"+taskid+"\'";
+		String query="update Tasks set reminder=1 where idtasks="+taskid;
 		Query theQuery=currentSession.createQuery(query);
 		int result=theQuery.executeUpdate();
 
@@ -154,10 +154,20 @@ public class TasksDaoImpl implements TasksDao {
 	@Transactional
 	public void dropTask(int taskid) {
 		Session currentSession=sessionFactory.getCurrentSession();
-		String query="update Tasks set dropp=1 where idtasks=\'"+taskid+"\'";
+		String query="update Tasks set dropp=1 where idtasks="+taskid;
 		Query theQuery=currentSession.createQuery(query);
 		int result=theQuery.executeUpdate();
 
+	}
+
+	@Override
+	@Transactional
+	public int getTaskbyOid(String oid) {
+		Session currentSession=sessionFactory.getCurrentSession();
+		String query="from Tasks t where dropp=0 and t.oid=\'"+oid+"\'";
+		Query <Tasks> theQuery=currentSession.createQuery(query,Tasks.class);
+		Tasks t=theQuery.getSingleResult();
+		return t.getIdtasks();
 	}
 
 }

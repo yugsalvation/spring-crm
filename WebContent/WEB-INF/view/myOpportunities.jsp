@@ -61,7 +61,7 @@ body{
     
       <tr class="active">
         <td>${opp.opportunityid} </td>
-        <td>${opp.names}</td>
+        <td>${opp.names} ${opp.names2}</td>
         <td>${opp.walking_date}</td>
         <td>${opp.emailid}</td>
         <td>${opp.contact_number}</td>

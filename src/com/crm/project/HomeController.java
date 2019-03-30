@@ -25,7 +25,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.SessionAttributes;
 
-
+import com.crm.project.dao.CustomerDao;
 import com.crm.project.dao.LeadAgentUserDao;
 
 import com.crm.project.dao.LeadsDao;
@@ -33,6 +33,7 @@ import com.crm.project.dao.OpportunityDao;
 import com.crm.project.dao.SalesExecutiveuserDao;
 import com.crm.project.dao.SalesuserDao;
 import com.crm.project.dao.TasksDao;
+import com.crm.project.entity.Customer;
 import com.crm.project.entity.Lead;
 import com.crm.project.entity.LeadAgentUser;
 import com.crm.project.entity.Leads;
@@ -212,6 +213,15 @@ public String ShowSalesexOpportunityPage(Model theModel,@ModelAttribute("id") St
 	return "salesexopportunities";
 }
 
+@RequestMapping("/salesexSearchOpportunity")
+public String ShowSalesexSearchOpportunityPage(Model theModel,@ModelAttribute("id") String seid,@RequestParam("oid")String id) throws Exception {
+
+	Opportunity o=opportunitydao.getOpportunity(id);
+	theModel.addAttribute("newopportunity",o);
+	
+	return "viewopportunity";
+}
+
 @Autowired
 private TasksDao tasksdao;
 @RequestMapping("/addsalesextask")
@@ -337,6 +347,58 @@ public String ShowProcessEmailPage(Model theModel,@ModelAttribute("id") String s
 		
 		return "mytasks";
 }
+
+@RequestMapping("/salesexReminders")
+public String ShowSalesexRemindersPage(Model theModel,@ModelAttribute("id") String seid) throws Exception {
+	
+	List<Tasks> tasks=tasksdao.getSalesexTodayTasks(seid);
+	theModel.addAttribute("reminders",tasks);
+	
+	return "salesexreminders";
+}
+
+@RequestMapping("/addCustomer")
+public String ShowAddCustomerPage(Model theModel,@ModelAttribute("id") String seid,@RequestParam("oppid")String oppid) throws Exception {
+	
+	Opportunity o=opportunitydao.getOpportunity(oppid);
+	Customer c=new Customer();
+	c.setSeuserid(seid);
+	c.setCity(o.getCity());
+	c.setContact_number(o.getContact_number());
+	c.setFname(o.getNames());
+	c.setLname(o.getNames2());
+	c.setEmailid(o.getEmailid());
+	c.setSalesuserid(o.getSuserid());
+	c.setOppid(o.getOpportunityid());
+	java.util.Date date=new java.util.Date();
+	SimpleDateFormat formatter=new SimpleDateFormat("yyyy-MM-dd");
+	java.sql.Date doc=java.sql.Date.valueOf(formatter.format(date));
+	c.setSignupdate(doc);
+	theModel.addAttribute("newcustomer",c);
+	
+	return "addcustomer";
+}
+
+@Autowired
+CustomerDao customerdao;
+@RequestMapping("/processAddCustomer")
+public String ShowProcessAddCustomerPage(Model theModel,@ModelAttribute("id") String seid,@ModelAttribute("newcustomer") Customer c) throws Exception {
+	
+	customerdao.addCustomer(c);
+	
+	return "salesexecutivehome";
+}
+
+@RequestMapping("/mySalesexCustomers")
+public String ShowMySalesexCustomersPage(Model theModel,@ModelAttribute("id") String seid) throws Exception {
+
+	List<Customer> mycustomers=customerdao.getSalesexCustomers(seid);
+	theModel.addAttribute("mycustomers",mycustomers);
+	
+	
+	return "mycustomers";
+}
+
 
 @RequestMapping("/leadagentlogin")
 public String ShowLeadAgentLoginPage(Model theModel) {

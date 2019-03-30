@@ -25,7 +25,8 @@ body{
 <form:form action="processdropopportunity" modelAttribute="newopportunity" style="padding:2%">
    <div class="form-group">
  
-<label for="names">Name:</label> <form:input class="form-control" path="names" readonly="true"/> 
+<label for="names">First Name:</label> <form:input class="form-control" path="names" readonly="true"/> 
+<label for="names2">Last Name:</label> <form:input class="form-control" path="names2" readonly="true"/> 
 <label for="opportunityid">oid:</label> <form:input class="form-control" path="opportunityid" readonly="true"/> <br/>
 <label for="description">
 

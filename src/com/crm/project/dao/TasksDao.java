@@ -18,5 +18,5 @@ public void updateTask(int taskid,Tasks t);
 public void completeTask(int taskid);
 public void sendReminderTask(int taskid);
 public void dropTask(int taskid);
-
+public int getTaskbyOid(String oid);
 }
