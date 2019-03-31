@@ -43,5 +43,15 @@ public class CustomerDaoImpl implements CustomerDao {
 		return c;
 
 	}
+	@Override
+	@Transactional
+	public Customer getCustomer(String cid) {
+		Session currentSession=sessionFactory.getCurrentSession();
+		String query="from Customer c where c.cid=\'"+cid+"\' and dropp=0";
+		Query <Customer> theQuery=currentSession.createQuery(query,Customer.class);
+		Customer c=theQuery.getSingleResult();
+		
+		return c;
+	}
 
 }

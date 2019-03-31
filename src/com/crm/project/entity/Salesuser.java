@@ -13,7 +13,6 @@ import javax.persistence.Table;
 @Table(name="salesuser")
 public class Salesuser {
 @Id
-@GeneratedValue(strategy=GenerationType.IDENTITY)
 @Column(name="idsalesuser")
 private String idsalesuser;
 

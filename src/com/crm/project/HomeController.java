@@ -25,11 +25,15 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.SessionAttributes;
 
+import com.crm.project.dao.AccountuserDao;
 import com.crm.project.dao.CustomerDao;
+import com.crm.project.dao.InvoiceDao;
 import com.crm.project.dao.LeadAgentUserDao;
 
 import com.crm.project.dao.LeadsDao;
 import com.crm.project.dao.OpportunityDao;
+import com.crm.project.dao.OrderDao;
+import com.crm.project.dao.ProductDao;
 import com.crm.project.dao.SalesExecutiveuserDao;
 import com.crm.project.dao.SalesuserDao;
 import com.crm.project.dao.TasksDao;
@@ -38,6 +42,8 @@ import com.crm.project.entity.Lead;
 import com.crm.project.entity.LeadAgentUser;
 import com.crm.project.entity.Leads;
 import com.crm.project.entity.Opportunity;
+import com.crm.project.entity.Order;
+import com.crm.project.entity.Product;
 import com.crm.project.entity.SalesExecutiveuser;
 import com.crm.project.entity.Salesuser;
 import com.crm.project.entity.Tasks;
@@ -399,6 +405,55 @@ public String ShowMySalesexCustomersPage(Model theModel,@ModelAttribute("id") St
 	return "mycustomers";
 }
 
+@Autowired
+OrderDao orderdao;
+
+@Autowired
+ProductDao productdao;
+
+@Autowired
+InvoiceDao invoicedao;
+
+@RequestMapping("/addOrder")
+public String ShowAddOrderPage(Model theModel,@ModelAttribute("id") String seid,@RequestParam("cid")String cid) throws Exception {
+
+	Order o=new Order();
+	o.setCustoid(cid);
+	List<Product> p=productdao.getProducts();
+	theModel.addAttribute("neworder",o);
+	theModel.addAttribute("products",p);
+	
+	
+	
+	return "addOrder";
+}
+
+@Autowired
+AccountuserDao accountuserdao;
+@RequestMapping("/processAddOrder")
+public String ShowProcessAddOrderPage(Model theModel,@ModelAttribute("id") String seid,@ModelAttribute("neworder")Order o) throws Exception {
+
+	Product p=productdao.getProduct(o.getPid());
+	o.setAmount(p.getAmount());
+	String ac=accountuserdao.lessOrderAccountuser();
+	o.setAccountusers(ac);
+	
+	orderdao.addOrder(o);
+	
+	accountuserdao.incrementordernumber(ac);
+	
+	List<Customer> mycustomers=customerdao.getSalesexCustomers(seid);
+	theModel.addAttribute("mycustomers",mycustomers);
+	return "mycustomers";
+}
+
+@RequestMapping("/viewOrders")
+public String ShowViewOrdersPage(Model theModel,@ModelAttribute("id") String seid,@RequestParam("cid")String cid) throws Exception {
+
+	List<Order> orders=orderdao.getCustomerOrders(cid);
+	theModel.addAttribute("orders",orders);
+	return "viewOrders";
+}
 
 @RequestMapping("/leadagentlogin")
 public String ShowLeadAgentLoginPage(Model theModel) {

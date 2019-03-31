@@ -8,4 +8,5 @@ import com.crm.project.entity.Opportunity;
 public interface CustomerDao {
 	public void addCustomer(Customer c);
 	public List<Customer> getSalesexCustomers(String seid);
+	public Customer getCustomer(String cid);
 }

@@ -39,7 +39,11 @@ body{
     <tbody>
 
     <c:forEach var="customers" items="${mycustomers}">
-   
+   <c:url var="addOrder" value="/addOrder">
+    	<c:param name="cid" value="${customers.cid}"></c:param>
+    </c:url>
+     <c:url var="vieworders" value="/viewOrders">
+    	<c:param name="cid" value="${customers.cid}"></c:param></c:url>
     <c:url var="dropopp" value="/dropopportunity">
     	<c:param name="opportunityid" value="${customers.cid}"></c:param>
     </c:url>
@@ -48,18 +52,18 @@ body{
     
       <tr class="active">
         <td>${customers.cid} </td>
-        <td>${customers.fname} ${opp.lname}</td>
+        <td>${customers.fname} ${customers.lname}</td>
         <td>${customers.signupdate}</td>
         <td>${customers.emailid}</td>
         <td>${customers.contact_number}</td>
         <td>${customers.city}</td>
+     
         
-        
-        <td>
-      
-        </td>
+
+      	<td> <a href="${addOrder}">add order</a></td>
+       
         <td> <a href="${dropopp}" onclick="return myFunction()">drop</a></td>
-      	<td></td>
+      	<td><a href="${vieworders}">Order History</a></td>
       </tr>
      </c:forEach>
     </tbody>
