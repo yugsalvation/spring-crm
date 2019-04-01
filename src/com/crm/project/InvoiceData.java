@@ -11,6 +11,20 @@ private String productname;
 private double total;
 private String idinvoice;
 private String city;
+private String billdate;
+private String duedate;
+public String getBilldate() {
+	return billdate;
+}
+public void setBilldate(String billdate) {
+	this.billdate = billdate;
+}
+public String getDuedate() {
+	return duedate;
+}
+public void setDuedate(String duedate) {
+	this.duedate = duedate;
+}
 public String getName() {
 	return name;
 }

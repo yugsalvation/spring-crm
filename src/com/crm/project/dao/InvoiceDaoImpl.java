@@ -30,7 +30,11 @@ import com.crm.project.entity.Order;
 import com.crm.project.entity.Product;
 import com.itextpdf.text.Document;
 import com.itextpdf.text.DocumentException;
+import com.itextpdf.text.Element;
 import com.itextpdf.text.Paragraph;
+import com.itextpdf.text.Rectangle;
+import com.itextpdf.text.pdf.PdfPCell;
+import com.itextpdf.text.pdf.PdfPTable;
 import com.itextpdf.text.pdf.PdfWriter;
 
 @Repository
@@ -59,7 +63,7 @@ public class InvoiceDaoImpl implements InvoiceDao {
 		Invoice inv=new Invoice();
 		inv.setAcuser(o.getAccountusers());
 		inv.setCustid(c.getCid());
-		double amount= p.getAmount()*((p.getTax())/100);
+		double amount= (p.getAmount()*((p.getTax())/100))+p.getAmount();
 		inv.setAmount(amount);
 		inv.setOrdid(o.getIdorder());
 		inv.setProductid(p.getIdproduct());
@@ -178,12 +182,15 @@ public class InvoiceDaoImpl implements InvoiceDao {
 		 double total;
 		 String idinvoice;
 		 String city;
+		 String billdate;
+		 String duedate;
 		Session currentSession=sessionFactory.getCurrentSession();
 		String query="from Invoice i where i.idinvoice=\'"+invoiceid+"\'";
 		Query <Invoice> theQuery=currentSession.createQuery(query,Invoice.class);
 		Invoice i=theQuery.getSingleResult();
 		Customer c=customerdao.getCustomer(i.getCustid());
 		Product p=productdao.getProduct(i.getProductid());
+		Order o=orderdao.getOrder(i.getOrdid());
 		InvoiceData ind=new InvoiceData();
 		name=c.getFname()+" "+c.getLname();
 		address1=c.getAddress1();
@@ -195,6 +202,8 @@ public class InvoiceDaoImpl implements InvoiceDao {
 		total=i.getAmount();  
 		idinvoice=i.getIdinvoice();
 		city=c.getCity();
+		billdate=String.valueOf(o.getBilldate());
+		duedate=String.valueOf(o.getDuedate());
 		ind.setName(name);
 		ind.setAddress1(address1);
 		ind.setAddress2(address2);
@@ -210,7 +219,87 @@ public class InvoiceDaoImpl implements InvoiceDao {
 		try {
 			PdfWriter writer=PdfWriter.getInstance(d,new FileOutputStream("C:\\Users\\charm\\eclipse-workspace\\spring-crm\\WebContent\\resources\\abcd.pdf"));
 			d.open();
-			d.add(new Paragraph("Dada"));
+			d.add(new Paragraph("CRM SYSTEMS"));
+			PdfPTable heading=new PdfPTable(1);
+			heading.setWidthPercentage(100);
+			PdfPCell cell1=new PdfPCell(new Paragraph("INVOICE"));
+			cell1.setHorizontalAlignment(Element.ALIGN_CENTER);
+			
+			cell1.setBorder(Rectangle.NO_BORDER);
+			
+			heading.addCell(cell1);
+		
+			PdfPTable customer=new PdfPTable(3);
+			customer.setWidthPercentage(100);
+			PdfPCell defaultCell=customer.getDefaultCell();
+			defaultCell.setBorder(PdfPCell.NO_BORDER);
+			PdfPCell ccell1=new PdfPCell(new Paragraph(ind.getName()));
+			ccell1.setBorder(Rectangle.NO_BORDER);
+			ccell1.setColspan(2);
+			PdfPCell ccell2=new PdfPCell(new Paragraph("Invoice Id:"+ind.getIdinvoice()));
+			ccell2.setBorder(Rectangle.NO_BORDER);
+			PdfPCell ccell3=new PdfPCell(new Paragraph("Customer Id:"+ind.getCid()));
+			ccell3.setBorder(Rectangle.NO_BORDER);
+			ccell3.setColspan(2);
+			PdfPCell ccell4=new PdfPCell(new Paragraph(""));
+			ccell4.setBorder(Rectangle.NO_BORDER);
+			PdfPCell ccell5=new PdfPCell(new Paragraph(ind.getAddress1()+",\n"+ind.getAddress2()+",\n"+ind.getCity()));
+			ccell5.setBorder(Rectangle.NO_BORDER);
+			ccell5.setColspan(2);
+			PdfPCell ccell6=new PdfPCell(new Paragraph(""));
+			ccell6.setBorder(Rectangle.NO_BORDER);
+			PdfPCell ccell7=new PdfPCell(new Paragraph(ind.getAddress2()));
+			ccell7.setBorder(Rectangle.NO_BORDER);
+			ccell7.setColspan(2);
+			customer.addCell(ccell1);
+			customer.addCell(ccell2);
+			customer.addCell(ccell3);
+			customer.addCell(ccell4);
+			customer.addCell(ccell5);
+			customer.addCell(ccell6);
+			customer.addCell(ccell7);
+			heading.setSpacingAfter(40f);
+			customer.setSpacingAfter(60f);
+			
+			PdfPTable bill=new PdfPTable(2);
+			bill.setWidthPercentage(100);
+			
+			PdfPCell bcell1=new PdfPCell(new Paragraph("Product:"));
+			bcell1.setHorizontalAlignment(Element.ALIGN_CENTER);
+			
+			PdfPCell bcell2=new PdfPCell(new Paragraph(ind.getProductname()));
+			bcell2.setHorizontalAlignment(Element.ALIGN_CENTER);
+			
+			PdfPCell bcell3=new PdfPCell(new Paragraph("Amount:"));
+			bcell3.setHorizontalAlignment(Element.ALIGN_CENTER);
+			
+			PdfPCell bcell4=new PdfPCell(new Paragraph(String.valueOf(ind.getAmount())));
+			bcell4.setHorizontalAlignment(Element.ALIGN_CENTER);
+			
+			PdfPCell bcell5=new PdfPCell(new Paragraph("Tax %:"));
+			bcell5.setHorizontalAlignment(Element.ALIGN_CENTER);
+			
+			PdfPCell bcell6=new PdfPCell(new Paragraph(String.valueOf(ind.getTax())));
+			bcell6.setHorizontalAlignment(Element.ALIGN_CENTER);
+			
+			PdfPCell bcell7=new PdfPCell(new Paragraph("Total:"));
+			bcell7.setHorizontalAlignment(Element.ALIGN_CENTER);
+			
+			PdfPCell bcell8=new PdfPCell(new Paragraph(String.valueOf(ind.getTotal())));
+			bcell8.setHorizontalAlignment(Element.ALIGN_CENTER);
+			
+			bill.addCell(bcell1);
+			bill.addCell(bcell2);
+			bill.addCell(bcell3);
+			bill.addCell(bcell4);
+			bill.addCell(bcell5);
+			bill.addCell(bcell6);
+			bill.addCell(bcell7);
+			bill.addCell(bcell8);
+			
+			d.add(heading);
+			d.add(customer);
+			d.add(bill);
 			d.close();
 			writer.close();
 		}

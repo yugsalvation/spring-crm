@@ -1,5 +1,9 @@
 package com.crm.project;
 
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.sql.Time;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -14,6 +18,7 @@ import javax.mail.Transport;
 import javax.mail.internet.InternetAddress;
 import javax.mail.internet.MimeMessage;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -455,7 +460,7 @@ public String ShowViewOrdersPage(Model theModel,@ModelAttribute("id") String sei
 	return "viewOrders";
 }
 @RequestMapping("/getInvoice")
-public String ShowGetInvoicePage(Model theModel,@ModelAttribute("id") String seid,@RequestParam("ordid")String ordid) throws Exception {
+public void ShowGetInvoicePage(HttpServletRequest request,Model theModel,@ModelAttribute("id") String seid,@RequestParam("ordid")String ordid, HttpServletResponse response) throws Exception {
 
 	Order o=orderdao.getOrder(ordid);
 	if(o.getInvoices()==0) {
@@ -464,9 +469,20 @@ public String ShowGetInvoicePage(Model theModel,@ModelAttribute("id") String sei
 	
 	String invoiceid=invoicedao.getInvoiceid(ordid);
 	invoicedao.getInvoiceItext(invoiceid);
-	List<Customer> mycustomers=customerdao.getSalesexCustomers(seid);
-	theModel.addAttribute("mycustomers",mycustomers);
-	return "mycustomers";
+	response.setContentType("application/pdf");
+	response.addHeader("content-disposition", "attachment; filename=abcd.pdf");
+	String dataDirectory = request.getServletContext().getRealPath("/WebContent/resources/");
+	Path file = Paths.get("C:/Users/charm/eclipse-workspace/spring-crm/WebContent/resources/", "abcd.pdf");
+	try
+    {
+        Files.copy(file, response.getOutputStream());
+        response.getOutputStream().flush();
+    }
+    catch (IOException ex) {
+        ex.printStackTrace();
+    }
+	
+	
 }
 
 
