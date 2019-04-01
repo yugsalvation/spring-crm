@@ -30,6 +30,7 @@ body{
         <th>Billing date</th>
         <th>Due Date</th>
         <th>Payment Status</th>
+        <th></th>
       </tr>
     </thead>
     <tbody>
@@ -37,13 +38,16 @@ body{
    
    
     <c:forEach var="orders" items="${orders}">
+     <c:url var="getinvoice" value="/getInvoice">
+    	<c:param name="ordid" value="${orders.idorder}"></c:param>
+    </c:url>
       <tr class="active">
         <td>${orders.idorder} </td>
         <td>${orders.pid}</td>
         <td>${orders.billdate}</td>
         <td>${orders.duedate}</td>
       	<td>${orders.payment}</td>
-        
+       <td><a href="${getinvoice}">GET INVOICE</a></td>
         
 
       </tr>

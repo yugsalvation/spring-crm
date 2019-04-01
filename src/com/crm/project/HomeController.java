@@ -454,6 +454,21 @@ public String ShowViewOrdersPage(Model theModel,@ModelAttribute("id") String sei
 	theModel.addAttribute("orders",orders);
 	return "viewOrders";
 }
+@RequestMapping("/getInvoice")
+public String ShowGetInvoicePage(Model theModel,@ModelAttribute("id") String seid,@RequestParam("ordid")String ordid) throws Exception {
+
+	Order o=orderdao.getOrder(ordid);
+	if(o.getInvoices()==0) {
+		invoicedao.addInvoice(ordid);
+	}
+	
+	String invoiceid=invoicedao.getInvoiceid(ordid);
+	invoicedao.getInvoiceItext(invoiceid);
+	List<Customer> mycustomers=customerdao.getSalesexCustomers(seid);
+	theModel.addAttribute("mycustomers",mycustomers);
+	return "mycustomers";
+}
+
 
 @RequestMapping("/leadagentlogin")
 public String ShowLeadAgentLoginPage(Model theModel) {
