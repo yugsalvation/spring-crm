@@ -1,5 +1,8 @@
 package com.crm.project;
 
+import java.io.BufferedOutputStream;
+import java.io.File;
+import java.io.FileOutputStream;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
@@ -29,6 +32,7 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.SessionAttributes;
+import org.springframework.web.multipart.MultipartFile;
 
 import com.crm.project.dao.AccountuserDao;
 import com.crm.project.dao.CustomerDao;
@@ -410,6 +414,38 @@ public String ShowMySalesexCustomersPage(Model theModel,@ModelAttribute("id") St
 	return "mycustomers";
 }
 
+@RequestMapping("/uploadFile")
+public String ShowUploadFilePage(Model theModel,@ModelAttribute("id") String seid,@RequestParam("cid")String cid) throws Exception {
+	Customer c=customerdao.getCustomer(cid);
+	theModel.addAttribute("cid",cid);
+	
+	
+	return "uploadFile";
+}
+
+@RequestMapping("/processUploadFile")
+public String ShowProcessUploadFilePage(Model theModel,@ModelAttribute("id") String seid,@RequestParam("cid")String cid,@RequestParam("idproof")MultipartFile file) throws Exception {
+	if(!file.isEmpty()) {
+		try {
+			byte[]bytes=file.getBytes();
+			File serverFile=new File("C:/Users/charm/eclipse-workspace/spring-crm/WebContent/resources/customeridproof/"+cid+".pdf");
+			BufferedOutputStream stream=new BufferedOutputStream(new FileOutputStream(serverFile));
+			stream.write(bytes);
+			stream.close();
+		}
+		catch(Exception e) {
+			
+		}
+	}
+	
+	List<Customer> mycustomers=customerdao.getSalesexCustomers(seid);
+	theModel.addAttribute("mycustomers",mycustomers);
+	
+	
+	return "mycustomers";
+}
+
+
 @Autowired
 OrderDao orderdao;
 
@@ -470,9 +506,9 @@ public void ShowGetInvoicePage(HttpServletRequest request,Model theModel,@ModelA
 	String invoiceid=invoicedao.getInvoiceid(ordid);
 	invoicedao.getInvoiceItext(invoiceid);
 	response.setContentType("application/pdf");
-	response.addHeader("content-disposition", "attachment; filename=abcd.pdf");
+	response.addHeader("content-disposition", "attachment; filename="+invoiceid+".pdf");
 	String dataDirectory = request.getServletContext().getRealPath("/WebContent/resources/");
-	Path file = Paths.get("C:/Users/charm/eclipse-workspace/spring-crm/WebContent/resources/", "abcd.pdf");
+	Path file = Paths.get("C:/Users/charm/eclipse-workspace/spring-crm/WebContent/resources/", invoiceid+".pdf");
 	try
     {
         Files.copy(file, response.getOutputStream());

@@ -217,7 +217,7 @@ public class InvoiceDaoImpl implements InvoiceDao {
 		
 		Document d=new Document();
 		try {
-			PdfWriter writer=PdfWriter.getInstance(d,new FileOutputStream("C:\\Users\\charm\\eclipse-workspace\\spring-crm\\WebContent\\resources\\abcd.pdf"));
+			PdfWriter writer=PdfWriter.getInstance(d,new FileOutputStream("C:\\Users\\charm\\eclipse-workspace\\spring-crm\\WebContent\\resources\\"+ind.getIdinvoice()+".pdf"));
 			d.open();
 			d.add(new Paragraph("CRM SYSTEMS"));
 			PdfPTable heading=new PdfPTable(1);

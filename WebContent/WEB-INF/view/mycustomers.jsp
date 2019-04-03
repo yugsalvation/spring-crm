@@ -34,6 +34,7 @@ body{
         <th></th>
         <th></th>
         <th></th>
+        <th></th>
       </tr>
     </thead>
     <tbody>
@@ -44,6 +45,9 @@ body{
     </c:url>
      <c:url var="vieworders" value="/viewOrders">
     	<c:param name="cid" value="${customers.cid}"></c:param></c:url>
+    
+    <c:url var="uploadFile" value="/uploadFile">
+    	<c:param name="cid" value="${customers.cid}"></c:param></c:url>	
     <c:url var="dropopp" value="/dropopportunity">
     	<c:param name="opportunityid" value="${customers.cid}"></c:param>
     </c:url>
@@ -58,7 +62,7 @@ body{
         <td>${customers.contact_number}</td>
         <td>${customers.city}</td>
      
-        
+        <td> <a href="${uploadFile}">uploadFile</a></td>
 
       	<td> <a href="${addOrder}">add order</a></td>
        
