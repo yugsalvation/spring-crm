@@ -46,6 +46,7 @@ import com.crm.project.dao.ProductDao;
 import com.crm.project.dao.SalesExecutiveuserDao;
 import com.crm.project.dao.SalesuserDao;
 import com.crm.project.dao.TasksDao;
+import com.crm.project.entity.Accountuser;
 import com.crm.project.entity.Customer;
 import com.crm.project.entity.Lead;
 import com.crm.project.entity.LeadAgentUser;
@@ -619,22 +620,68 @@ public String ProcessUpdateLeadPage(@ModelAttribute("newlead") Leads lead,Model 
 	return "lead";
 }
 
-@RequestMapping("/addcustomer")
-public String ShowAddCustomerPage(Model theModel) {
-	NewCustomer nc=new NewCustomer();
-	theModel.addAttribute("newcustomer",nc);
-	return "addcustomer";
+
+@RequestMapping("/accountuserlogin")
+public String ShowAccountUserLoginPage(Model theModel) {
+	//Accountuser au=new Accountuser();
+	
+	theModel.addAttribute("accountusers",new Accountuser());
+	
+	return "accountuserlogin";
 }
-@RequestMapping("/customer")
-public String ShowCustomerPage(Model theModel) {
-	NewCustomer nc=new NewCustomer();
-	theModel.addAttribute("newcustomer",nc);
-	return "customer";
+
+
+@RequestMapping("/AccountUserPage")
+
+public String ShowAccountUserPage(@ModelAttribute("accountusers") Accountuser au, ModelMap theModel) {
+
+	String idacuser=accountuserdao.getAccountuser(au.getUsername(), au.getPassword());
+	
+	if(idacuser.equals("")) {
+		//u.setMessage("invalid");
+		return "accountuserlogin";
+		}
+	else {
+	
+		theModel.put("id",idacuser);
+		
+		
+		
+		return "accountuserhome";
+	}
 }
-@RequestMapping("/newPayment")
-public String ShowNewPaymentPage(Model theModel) {
-	NewPayment np=new NewPayment();
-	theModel.addAttribute("newpayment",np);
-	return "newPayment";
+
+@RequestMapping("/pendingPayments")
+public String ShowPendingPaymentsPage(Model theModel,@ModelAttribute("id") String idacuser) throws Exception {
+
+	List<Order> orders=orderdao.getPending(idacuser);
+	theModel.addAttribute("orders",orders);
+	return "pendingPayments";
 }
+
+@RequestMapping("/viewCustomer")
+public String ShowViewCustomerPage(Model theModel,@ModelAttribute("id") String idacuser,@RequestParam("cid")String cid) throws Exception {
+
+	Customer c=customerdao.getCustomer(cid);
+	theModel.addAttribute("customer",c);
+	return "viewCustomer";
+}
+
+@RequestMapping("/addPayment")
+public String ShowAddPaymentPage(Model theModel,@ModelAttribute("id") String idacuser,@RequestParam("ordid")String ordid) throws Exception {
+
+	Order o=orderdao.getOrder(ordid);
+	theModel.addAttribute("order",o);
+	return "addPayment";
+}
+@RequestMapping("/processAddPayment")
+public String ShowProcessAddPaymentPage(Model theModel,@ModelAttribute("id") String idacuser,@ModelAttribute("order") Order order) throws Exception {
+
+	orderdao.addPayment(order.getIdorder(), order);
+	List<Order> orders=orderdao.getPending(idacuser);
+	theModel.addAttribute("orders",orders);
+	return "pendingPayments";
+}
+
+
 }

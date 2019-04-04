@@ -23,49 +23,39 @@ body{
 </style>
 </head>
 
-<body background="<c:url value='/resources/wallpaper4.jpeg' />">
+<body background="<c:url value='/resources/wallpaper2.jpg' />">
 <div class="container-fluid">
 
   <div class="col-sm-4"></div>
   <div class="col-sm-4">
 <div class="page-header">
  
- <h1 style="background-color:rgb(240, 255, 255,0.8);text-align:center;">CRM Systems</h1></div> </div>
+ <h1 style="background-color:rgb(240, 255, 255,0.8);text-align:center;">CRM Systems</h1></div></div>
 
   <div class="col-sm-4"></div>
  </div>
- <div class="row">
   <div class="container-fluid" >
    <div class="col-sm-4"></div>
  <div class="col-sm-4">
- <a href="salesexecutivelogin"><h2 style="background-color:rgb(240, 255, 255,0.8);text-align:center;padding:10%">Sales Executive</h2></a>
+<form:form action="AccountUserPage" modelAttribute="accountusers" style="background-color:rgb(220,220,220,0.8);padding:10%;">
+   <div class="form-group">
+<label for="username">username:</label> <form:input class="form-control" path="username"/><br/>
+<label for="password">password:</label><form:input type="password" class="form-control" path="password"/> <br/>
+<div class="row" align="center">
+<button type="submit" class="btn">submit</button>
+<form:form action="AccountUserPage" modelAttribute="accountusers">
+<button type="submit" class="btn">forgot password?</button>
+</form:form>
+</div>
+
+</div>
+</form:form>
+
+
 </div>
 
 
   <div class="col-sm-4"></div>
-</div></div>
-<br/>
- <div class="row">
-  <div class="container-fluid" >
-   <div class="col-sm-4"><a href="saleslogin"> <h2 style="background-color:rgb(240, 255, 255,0.8);text-align:center;padding:10%;">Sales Employee</h2></a></div>
- <div class="col-sm-4">
-
 </div>
-
-
-  <div class="col-sm-4"><a href="accountuserlogin"> <h2 style="background-color:rgb(240, 255, 255,0.8);text-align:center;padding:10%">Accounts</h2>
-</a></div>
-</div></div><br/>
- <div class="row">
-  <div class="container-fluid" >
-   <div class="col-sm-4"></div>
- <div class="col-sm-4">
- <a href="leadagentlogin"> <h2 style="background-color:rgb(240, 255, 255,0.8);text-align:center;padding:10%">Lead Agent</h2>
-</a>
-</div>
-
-
-  <div class="col-sm-4"></div>
-</div></div>
 </body>
 </html>

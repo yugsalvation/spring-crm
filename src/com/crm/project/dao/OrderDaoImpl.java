@@ -1,5 +1,6 @@
 package com.crm.project.dao;
 
+import java.text.SimpleDateFormat;
 import java.util.List;
 
 import org.hibernate.Session;
@@ -61,6 +62,33 @@ public class OrderDaoImpl implements OrderDao {
 		Query theQuery=currentSession.createQuery(query);
 		int result=theQuery.executeUpdate();
 		
+		
+	}
+
+	@Override
+	@Transactional
+	public List<Order> getPending(String idacuser) {
+		java.util.Date date=new java.util.Date();
+		SimpleDateFormat formatter=new SimpleDateFormat("yyyy-MM-dd");
+		java.sql.Date doc=java.sql.Date.valueOf(formatter.format(date));
+		Session currentSession=sessionFactory.getCurrentSession();
+		String query="from Order o where o.accountusers=\'"+idacuser+"\' and o.dropp=0 and payment=\'PENDING\' and o.duedate>=\'"+doc+"\' order by o.duedate";
+		Query<Order> theQuery=currentSession.createQuery(query,Order.class);
+		
+		List<Order>orders=theQuery.getResultList();
+		
+		return orders;
+		
+	}
+
+	@Override
+	@Transactional
+	
+	public void addPayment(String ordid,Order o) {
+		Session currentSession=sessionFactory.getCurrentSession();
+		String query="update Order o set o.payment=\'COMPLETED\' ,referencenumber=\'"+o.getReferencenumber()+"\' where o.idorder=\'"+ordid+"\'";
+		Query theQuery=currentSession.createQuery(query);
+		int result=theQuery.executeUpdate();
 		
 	}
 
