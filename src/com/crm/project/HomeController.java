@@ -522,6 +522,31 @@ public void ShowGetInvoicePage(HttpServletRequest request,Model theModel,@ModelA
 	
 }
 
+@RequestMapping("/getReports")
+public String ShowGetReportsPage(Model theModel,@ModelAttribute("id") String seid) throws Exception {
+	
+	
+	return "getReports";
+}
+
+@RequestMapping("/getOppReports")
+public void ShowGetOppReportsPage(Model theModel,@ModelAttribute("id") String seid,@RequestParam("from")java.sql.Date from,@RequestParam("to")java.sql.Date to,HttpServletRequest request,HttpServletResponse response) throws Exception {
+	String x=opportunitydao.getOppReport(seid, from, to);response.setContentType("application/pdf");
+	response.addHeader("content-disposition", "attachment; filename="+from+"_"+to+".pdf");
+	String dataDirectory = request.getServletContext().getRealPath("/WebContent/resources/");
+	Path file = Paths.get("C:/Users/charm/eclipse-workspace/spring-crm/WebContent/resources/reports/salesexecutive/"+seid+"/OPPORTUNITY/", from+"_"+to+".pdf");
+	try
+    {
+        Files.copy(file, response.getOutputStream());
+        response.getOutputStream().flush();
+    }
+    catch (IOException ex) {
+        ex.printStackTrace();
+    }
+	
+
+}
+
 
 @RequestMapping("/leadagentlogin")
 public String ShowLeadAgentLoginPage(Model theModel) {
@@ -658,7 +683,13 @@ public String ShowPendingPaymentsPage(Model theModel,@ModelAttribute("id") Strin
 	theModel.addAttribute("orders",orders);
 	return "pendingPayments";
 }
+@RequestMapping("/overduePayments")
+public String ShowOverduePaymentsPage(Model theModel,@ModelAttribute("id") String idacuser) throws Exception {
 
+	List<Order> orders=orderdao.getOverdue(idacuser);
+	theModel.addAttribute("orders",orders);
+	return "overduePayments";
+}
 @RequestMapping("/viewCustomer")
 public String ShowViewCustomerPage(Model theModel,@ModelAttribute("id") String idacuser,@RequestParam("cid")String cid) throws Exception {
 

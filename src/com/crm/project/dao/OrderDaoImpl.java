@@ -92,4 +92,19 @@ public class OrderDaoImpl implements OrderDao {
 		
 	}
 
+	@Override
+	@Transactional
+	public List<Order> getOverdue(String idacuser) {
+		java.util.Date date=new java.util.Date();
+		SimpleDateFormat formatter=new SimpleDateFormat("yyyy-MM-dd");
+		java.sql.Date doc=java.sql.Date.valueOf(formatter.format(date));
+		Session currentSession=sessionFactory.getCurrentSession();
+		String query="from Order o where o.accountusers=\'"+idacuser+"\' and o.dropp=0 and payment=\'PENDING\' and o.duedate<\'"+doc+"\' order by o.duedate";
+		Query<Order> theQuery=currentSession.createQuery(query,Order.class);
+		
+		List<Order>orders=theQuery.getResultList();
+		
+		return orders;
+	}
+
 }

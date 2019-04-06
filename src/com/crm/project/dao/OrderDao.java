@@ -11,4 +11,5 @@ public interface OrderDao {
 	public void updateInvoice(String ordid);
 	public List<Order>getPending(String idacuser);
 	public void addPayment(String ordid,Order o);
+	public List<Order>getOverdue(String idacuser);
 }
