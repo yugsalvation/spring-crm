@@ -31,11 +31,13 @@ body{
 
 <body >
  <div class="container-fluid">
- <table class="table" style="margin-top:15%" >
+ <h1>Tasks</h1>
+ <table class="table" style="margin-top:3%" >
     <thead>
       <tr class="active">
         <th>Opportunity id</th>
-        <th>Name</th>
+        <th>Fname</th>
+        <th>Lname</th>
         <th>DOC</th>
      
         <th>DOM</th>
@@ -62,6 +64,7 @@ body{
       <tr class="active">
       	<td>${tasks.oid}</td>
         <td>${tasks.names} </td>
+        <td>${tasks.names2} </td>
         <td>${tasks.doc}</td>
     
         <td>${tasks.dom}</td>

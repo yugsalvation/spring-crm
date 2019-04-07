@@ -35,7 +35,8 @@ body{
     <thead>
       <tr class="active">
         <th>Opportunity id</th>
-        <th>Name</th>
+        <th>Fname</th>
+         <th>Lname</th>
         <th>DOC</th>
      
         <th>DOM</th>
@@ -56,6 +57,7 @@ body{
       <tr class="active">
       	<td>${reminders.oid}</td>
         <td>${reminders.names} </td>
+        <td>${reminders.names2} </td>
         <td>${reminders.doc}</td>
     
         <td>${reminders.dom}</td>

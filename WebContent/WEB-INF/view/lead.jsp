@@ -49,7 +49,8 @@ function Export() {
 </script>
 <body >
  <div class="container-fluid">
- <table class="table" style="margin-top:15%" id="table2excel" >
+ <h1 style="text-align:center;">MY LEADS</h1>
+ <table class="table" style="margin-top:3%" id="table2excel" >
     <thead>
       <tr class="active">
         <th>Lead id</th>
@@ -86,6 +87,6 @@ function Export() {
   <br/>
 
   </div>
-<input type="button" id="btnExport" value="Export" onclick="Export()" />
+
 </body>
 </html>

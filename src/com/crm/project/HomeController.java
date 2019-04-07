@@ -229,6 +229,26 @@ public String ShowSalesexOpportunityPage(Model theModel,@ModelAttribute("id") St
 	return "salesexopportunities";
 }
 
+@RequestMapping("/dropsalesexopportunity")
+public String ShowSalesexDropOpportunityPage(Model theModel,@RequestParam("opportunityid")String id) {
+	
+	Opportunity o=opportunitydao.getOpportunity(id);
+	theModel.addAttribute("newopportunity",o);
+	return "dropopportunity";
+}
+
+@RequestMapping("/processsalesexdropopportunity")
+public String ProcessSalesexDropOpportunityPage(@ModelAttribute("newopportunity") Opportunity o,Model theModel,@ModelAttribute("id") String seid) {
+	
+	String oid=o.getOpportunityid();
+
+	opportunitydao.dropOpportunity(o,oid);
+	List<Opportunity> opp=opportunitydao.getOpportunities(seid);
+	theModel.addAttribute("myopp",opp);
+	
+	return "salesexopportunities";
+}
+
 @RequestMapping("/salesexSearchOpportunity")
 public String ShowSalesexSearchOpportunityPage(Model theModel,@ModelAttribute("id") String seid,@RequestParam("oid")String id) throws Exception {
 
@@ -547,6 +567,23 @@ public void ShowGetOppReportsPage(Model theModel,@ModelAttribute("id") String se
 
 }
 
+@RequestMapping("/getCustReports")
+public void ShowGetCustReportsPage(Model theModel,@ModelAttribute("id") String seid,@RequestParam("from")java.sql.Date from,@RequestParam("to")java.sql.Date to,HttpServletRequest request,HttpServletResponse response) throws Exception {
+	String x=customerdao.getCustReport(seid, from, to);response.setContentType("application/pdf");
+	response.addHeader("content-disposition", "attachment; filename="+from+"_"+to+".pdf");
+	String dataDirectory = request.getServletContext().getRealPath("/WebContent/resources/");
+	Path file = Paths.get("C:/Users/charm/eclipse-workspace/spring-crm/WebContent/resources/reports/salesexecutive/"+seid+"/CUSTOMER/", from+"_"+to+".pdf");
+	try
+    {
+        Files.copy(file, response.getOutputStream());
+        response.getOutputStream().flush();
+    }
+    catch (IOException ex) {
+        ex.printStackTrace();
+    }
+	
+
+}
 
 @RequestMapping("/leadagentlogin")
 public String ShowLeadAgentLoginPage(Model theModel) {

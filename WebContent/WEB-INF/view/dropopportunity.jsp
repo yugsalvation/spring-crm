@@ -30,7 +30,7 @@ body{
 <label for="opportunityid">oid:</label> <form:input class="form-control" path="opportunityid" readonly="true"/> <br/>
 <label for="description">
 
-Reason</label><br/><form:textarea rows="20" cols="90" path="description"/><br/>
+Reason</label><br/><form:textarea rows="20" cols="90" path="description" required="required"/><br/>
 
 <br/>
 

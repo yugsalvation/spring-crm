@@ -22,17 +22,15 @@ body{
 </head>
 <body >
 <div class="container-fluid">
-<form:form action="processupdatetask" modelAttribute="newtask" style="padding:2%">
+<form:form action="processsalesexdropopportunity" modelAttribute="newopportunity" style="padding:2%">
    <div class="form-group">
+ 
+<label for="names">First Name:</label> <form:input class="form-control" path="names" readonly="true"/> 
+<label for="names2">Last Name:</label> <form:input class="form-control" path="names2" readonly="true"/> 
+<label for="opportunityid">oid:</label> <form:input class="form-control" path="opportunityid" readonly="true"/> <br/>
+<label for="description">
 
-<label for="taskid"></label> <form:input class="form-control" path="idtasks" type="hidden"/> 
-<label for="names">Fname:</label> <form:input class="form-control" path="names" readonly="true"/> <br/>
-<label for="names">Lname:</label> <form:input class="form-control" path="names2" readonly="true"/> <br/>
-<label for="opportunityid">oid:</label> <form:input class="form-control" path="oid" readonly="true"/> <br/>
-<label for="dom">Date of Meeting:</label><form:input type="date"  class="form-control" path="dom" /> <br/>
-<label for="tom">Time of Meeting:</label><form:input type="time"  class="form-control"  path="tom"/> <br/>
-<label for="dor">Date of Reminder:</label><form:input type="date"  class="form-control" path="dor" /> <br/>
-<label for="description">Description</label><br/> <form:textarea rows="20" cols="90" path="description"/><br/>
+Reason</label><br/><form:textarea rows="20" cols="90" path="description" required="required"/><br/>
 
 <br/>
 

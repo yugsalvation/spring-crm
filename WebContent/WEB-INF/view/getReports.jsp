@@ -27,7 +27,7 @@ body{
  
 <div class="col-sm-2"></div>
 <div class="col-sm-8">
-
+<div class=row>
  <h1 style="text-align:center;">Opportunity Report</h1>
 <form:form action="getOppReports" class="form-inline">
 
@@ -45,6 +45,30 @@ body{
 
 </form:form>
 
+  </div>
+  <br/>
+  <br/>
+  <br/>
+  <div class=row>
+ <h1 style="text-align:center;">Customer Report</h1>
+<form:form action="getCustReports" class="form-inline">
+
+
+  <div class="form-group">
+    <label for="from">From:</label>
+    <input type="date" class="form-control" name="from">
+  </div>
+  <div class="form-group">
+   <label for="to">To:</label>
+    <input type="date" class="form-control" name="to">
+  </div>
+  
+  <button type="submit" class="btn btn-default">Get Report</button>
+
+</form:form>
+
+  </div>
+  </div>
   </div>
   <div class="col-sm-2"></div>
 

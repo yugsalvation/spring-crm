@@ -53,6 +53,17 @@ public class Tasks {
 	
 	@Column(name="names")	
 	private String names;
+	
+	@Column(name="names2")	
+	private String names2;
+
+	public String getNames2() {
+		return names2;
+	}
+
+	public void setNames2(String names2) {
+		this.names2 = names2;
+	}
 
 	public String getNames() {
 		return names;

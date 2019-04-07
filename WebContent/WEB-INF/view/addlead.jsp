@@ -25,14 +25,14 @@ body{
 <form:form action="processlead" modelAttribute="newlead" style="padding:2%">
    <div class="form-group">
     
-<label for="names">First Name:</label> <form:input class="form-control" path="names"/><br/>
-<label for="names2">Last Name:</label> <form:input class="form-control" path="names2"/><br/>
-<label for="walking_date">Walking date:</label><form:input type="date"  class="form-control" path="walking_date" /> <br/>
-<label for="emailid">Email id:</label> <form:input class="form-control" path="emailid"/><br/>
-<label for="contact_number">Contact number:</label> <form:input class="form-control" type="tel" path="contact_number"/><br/>
-<label for="leadsource">Lead Source:</label> <form:input class="form-control" path="leadsource"/><br/>
+<label for="names">First Name:</label> <form:input class="form-control" path="names" onkeydown="upperCaseF(this)" required="required"/><br/>
+<label for="names2">Last Name:</label> <form:input class="form-control" path="names2" onkeydown="upperCaseF(this)" required="required"/><br/>
+<label for="walking_date">Walking date:</label><form:input type="date"  class="form-control" path="walking_date" required="required"/> <br/>
+<label for="emailid">Email id:</label> <form:input class="form-control" path="emailid" required="required"/><br/>
+<label for="contact_number">Contact number:</label> <form:input class="form-control" type="tel" path="contact_number" required="required"/><br/>
+<label for="leadsource">Lead Source:</label> <form:input class="form-control" path="leadsource" onkeydown="upperCaseF(this)" required="required"/><br/>
 <label for="agentid">Lead Agent:</label> <form:input class="form-control" value= "${id}" path="agentid" readonly="true"/><br/>
-<label for="city">City:</label> <form:input class="form-control" path="city"/><br/>
+<label for="city">City:</label> <form:input class="form-control" path="city" onkeydown="upperCaseF(this)" required="required"/><br/>
 
 
 
@@ -42,5 +42,12 @@ body{
 </div>
 </form:form>
 </div>
+<script>
+function upperCaseF(a){
+    setTimeout(function(){
+        a.value = a.value.toUpperCase();
+    }, 1);
+}
+</script>
 </body>
 </html>

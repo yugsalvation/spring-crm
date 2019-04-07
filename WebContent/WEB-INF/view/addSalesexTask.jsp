@@ -25,7 +25,8 @@ body{
 <form:form action="processaddtask" modelAttribute="tasks" style="padding:2%">
    <div class="form-group">
     
-<label for="names">Name:</label><form:input  class="form-control" path="names" value="${opp.names}" readonly="true"/> <br/>
+<label for="names">Fname:</label><form:input  class="form-control" path="names" value="${opp.names}" readonly="true"/> <br/>
+<label for="names">Lname:</label><form:input  class="form-control" path="names" value="${opp.names2}" readonly="true"/> <br/>
 <label for="oid">OID:</label><form:input  class="form-control" path="oid" value="${opp.opportunityid}" readonly="true"/> <br/>
 
 <label for="seuser">Sales Executive id:</label> <form:input class="form-control" value="${id}" path="seuser" readonly="true"/><br/>
