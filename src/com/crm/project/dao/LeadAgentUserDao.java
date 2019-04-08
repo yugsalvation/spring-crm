@@ -7,4 +7,5 @@ import com.crm.project.entity.LeadAgentUser;
 public interface LeadAgentUserDao {
 public List<LeadAgentUser> getLeadAgentUsers();
 public String getLeadAgentUser(String a,String b);
+public String forgotPassword(String email,String leaduserid);
 }

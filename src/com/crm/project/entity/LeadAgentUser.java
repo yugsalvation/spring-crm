@@ -29,6 +29,22 @@ private String emailid;
 @Column(name="contact_number")
 private long contact_number;
 
+public String getUseremail() {
+	return useremail;
+}
+
+public void setUseremail(String useremail) {
+	this.useremail = useremail;
+}
+
+public String getEmailpassword() {
+	return emailpassword;
+}
+
+public void setEmailpassword(String emailpassword) {
+	this.emailpassword = emailpassword;
+}
+
 @Column(name="company")
 private String company;
 
@@ -37,6 +53,13 @@ private String uname;
 
 @Column(name="password")
 private String password;
+
+@Column(name="useremail")
+private String useremail;
+
+@Column(name="emailpassword")
+private String emailpassword;
+
 
 public String getAgentid() {
 	return agentid;

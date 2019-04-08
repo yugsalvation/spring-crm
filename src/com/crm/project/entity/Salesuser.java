@@ -43,6 +43,28 @@ private String lname;
 @Column(name="leadnumber")
 private int leadnumber;
 
+@Column(name="useremail")
+private String useremail;
+
+@Column(name="emailpassword")
+private String emailpassword;
+
+public String getUseremail() {
+	return useremail;
+}
+
+public void setUseremail(String useremail) {
+	this.useremail = useremail;
+}
+
+public String getEmailpassword() {
+	return emailpassword;
+}
+
+public void setEmailpassword(String emailpassword) {
+	this.emailpassword = emailpassword;
+}
+
 public String getIdsalesuser() {
 	return idsalesuser;
 }

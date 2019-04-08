@@ -112,6 +112,64 @@ public String SalesPage(@ModelAttribute("salesusers") Salesuser su, ModelMap the
 	}
 }
 
+
+@RequestMapping("/salesForgotPassword")
+public String ShowSalesForgotPasswordPage(Model theModel) throws Exception {
+	Emails e=new Emails();
+	theModel.addAttribute("emails",e);
+	
+	return "forgotSalesPassword";
+}
+@RequestMapping("/processsalesForgotPassword")
+public String ShowProcessSalesForgotPasswordPage(Model theModel,@ModelAttribute("emails") Emails e) throws Exception {
+	String passwords=salesuserdao.forgotPassword(e.getTo1(),e.getSuserid());
+	if(!passwords.equals("")) {
+	try {
+		Properties props=System.getProperties();
+		String to=e.getTo1();
+		String subject="forgot password";
+		String message="your password is: \n"+passwords;
+		message = message.replace("\n", "<br/>");
+			
+			e.setFrom("crmsystemspvtltd@gmail.com");
+			
+			e.setUsername("crmsystemspvtltd");
+			e.setPassword("Dada@3232");
+			String username=e.getUsername();
+			String password=e.getPassword();
+			String from=e.getFrom();
+		props.put("mail.smtp.host","smtp.gmail.com");
+		props.put("mail.smtp.auth","true");
+		props.put("mail.smtp.port","465");
+		props.put("mail.smtp.socketFactory.class","javax.net.ssl.SSLSocketFactory");
+		props.put("mail.smtp.socketFactory.port","465");
+		props.put("mail.smtp.socketFactory.fallback","false");
+		Session mailSession=Session.getDefaultInstance(props,null);
+		mailSession.setDebug(true);
+		Message mailMessage=new MimeMessage(mailSession);
+		mailMessage.setFrom(new InternetAddress(from));
+		mailMessage.setRecipient(Message.RecipientType.TO, new InternetAddress(to));
+		mailMessage.setContent(message,"text/html");
+		mailMessage.setSubject(subject);
+		Transport transport=mailSession.getTransport("smtp");
+		transport.connect("smtp.gmail.com",username,password);
+		transport.sendMessage(mailMessage,mailMessage.getAllRecipients());
+		
+		
+		}
+		catch(Exception ex)
+		{
+			System.out.println(ex);
+		}
+	}
+Salesuser su=new Salesuser();
+	
+	theModel.addAttribute("salesusers",su);
+	String m="";
+	theModel.addAttribute("message",m);
+	return "saleslogin";
+}
+
 @RequestMapping("/SalesLeadPage")
 public String ShowSalesLeadPage(Model theModel,@ModelAttribute("id") String id) {
 	List<Leads>l=leadsdao.getSalesLeads(id); 
@@ -277,6 +335,8 @@ public String ShowProcessSalesexForgotPasswordPage(Model theModel,@ModelAttribut
 	}
 	SalesExecutiveuser u=new SalesExecutiveuser();
 	theModel.addAttribute("salesexeuser",u);
+	String m="";
+	theModel.addAttribute("message",m);
 	return "salesexecutivelogin";
 }
 
@@ -709,6 +769,62 @@ public String leadAgentPage(@ModelAttribute("leadagentusers") LeadAgentUser u, M
 		theModel.addAttribute("sales",minlead);
 		return "leadagentuserhome";
 	}
+}
+@RequestMapping("/leadAgentForgotPassword")
+public String ShowLeadAgentForgotPasswordPage(Model theModel) throws Exception {
+	Emails e=new Emails();
+	theModel.addAttribute("emails",e);
+	
+	return "forgotLeadAgentPassword";
+}
+@RequestMapping("/processLeadAgentForgotPassword")
+public String ShowProcessLeadAgentForgotPasswordPage(Model theModel,@ModelAttribute("emails") Emails e) throws Exception {
+	String passwords=leadagentdao.forgotPassword(e.getTo1(),e.getLeaduserid());
+	if(!passwords.equals("")) {
+	try {
+		Properties props=System.getProperties();
+		String to=e.getTo1();
+		String subject="forgot password";
+		String message="your password is: \n"+passwords;
+		message = message.replace("\n", "<br/>");
+			
+			e.setFrom("crmsystemspvtltd@gmail.com");
+			
+			e.setUsername("crmsystemspvtltd");
+			e.setPassword("Dada@3232");
+			String username=e.getUsername();
+			String password=e.getPassword();
+			String from=e.getFrom();
+		props.put("mail.smtp.host","smtp.gmail.com");
+		props.put("mail.smtp.auth","true");
+		props.put("mail.smtp.port","465");
+		props.put("mail.smtp.socketFactory.class","javax.net.ssl.SSLSocketFactory");
+		props.put("mail.smtp.socketFactory.port","465");
+		props.put("mail.smtp.socketFactory.fallback","false");
+		Session mailSession=Session.getDefaultInstance(props,null);
+		mailSession.setDebug(true);
+		Message mailMessage=new MimeMessage(mailSession);
+		mailMessage.setFrom(new InternetAddress(from));
+		mailMessage.setRecipient(Message.RecipientType.TO, new InternetAddress(to));
+		mailMessage.setContent(message,"text/html");
+		mailMessage.setSubject(subject);
+		Transport transport=mailSession.getTransport("smtp");
+		transport.connect("smtp.gmail.com",username,password);
+		transport.sendMessage(mailMessage,mailMessage.getAllRecipients());
+		
+		
+		}
+		catch(Exception ex)
+		{
+			System.out.println(ex);
+		}
+	}
+	LeadAgentUser leadagentusers=new LeadAgentUser();
+	theModel.addAttribute("leadagentusers",leadagentusers);
+	String m="";
+	theModel.addAttribute("message",m);
+	return "leadagentlogin";
+
 }
 
 @RequestMapping("/example")

@@ -17,6 +17,7 @@ import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.crm.project.entity.LeadAgentUser;
+import com.crm.project.entity.SalesExecutiveuser;
 import com.crm.project.entity.Salesuser;
 
 @Repository
@@ -67,6 +68,22 @@ public class SalesuserDaoImpl implements SalesuserDao {
 		Query thequery=currentSession.createQuery(query);
 		int result=thequery.executeUpdate();
 		
+	}
+
+	@Override
+	@Transactional
+	public String forgotPassword(String email, String susrid) {
+		Session currentSession=sessionFactory.getCurrentSession();
+		String query="from Salesuser su where su.idsalesuser="+"\'"+susrid+"\' and emailid=\'"+email+"\'";
+		try {
+		Query<Salesuser> theQuery=currentSession.createQuery(query,Salesuser.class);
+	
+		Salesuser usr=theQuery.getSingleResult();
+		String pass=usr.getPassword();
+		return pass;}
+		catch(Exception e) {
+			return "";
+		}
 	}
 	
 

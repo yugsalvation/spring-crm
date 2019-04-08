@@ -30,26 +30,24 @@ body{
   <div class="col-sm-4">
 <div class="page-header">
  
- <h1 style="background-color:rgb(240, 255, 255,0.8);text-align:center;">CRM Systems</h1></div></div>
+ <h1 style="background-color:rgb(240, 255, 255,0.8);text-align:center;">CRM Systems</h1></div> </div>
 
   <div class="col-sm-4"></div>
  </div>
   <div class="container-fluid" >
    <div class="col-sm-4"></div>
  <div class="col-sm-4">
-<form:form action="leadAgentPage" modelAttribute="leadagentusers" style="background-color:rgb(220,220,220,0.8);padding:10%;">
+ 
+<form:form action="processLeadAgentForgotPassword" modelAttribute="emails" style="background-color:rgb(220,220,220,0.8);padding:10%;">
    <div class="form-group">
-<label for="username">username:</label> <form:input class="form-control" path="uname"/><br/>
-<label for="password">password:</label><form:input type="password" class="form-control" path="password"/> <br/>
+<label for="id">Sales ID:</label> <form:input class="form-control" path="leaduserid"/><br/>
+<label for="emailid">emailid:</label><form:input  class="form-control" path="to1"/> <br/>
 <div class="row" align="center">
-<p style="color:red">${message}</p>
 <button type="submit" class="btn">submit</button>
-<button type="button" onclick="window.location.href='leadAgentForgotPassword'" class="btn">Forgot Password</button>
 </div>
 
 </div>
 </form:form>
-
 
 </div>
 

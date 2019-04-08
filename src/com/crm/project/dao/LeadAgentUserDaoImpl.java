@@ -10,6 +10,7 @@ import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.crm.project.entity.LeadAgentUser;
+import com.crm.project.entity.Salesuser;
 @Repository
 public class LeadAgentUserDaoImpl implements LeadAgentUserDao {
 
@@ -39,6 +40,22 @@ public class LeadAgentUserDaoImpl implements LeadAgentUserDao {
 		String id=usr.getAgentid();
 
 		return id;}
+		catch(Exception e) {
+			return "";
+		}
+	}
+
+	@Override
+	@Transactional
+	public String forgotPassword(String email, String leaduserid) {
+		Session currentSession=sessionFactory.getCurrentSession();
+		String query="from LeadAgentUser su where su.agentid="+"\'"+leaduserid+"\' and emailid=\'"+email+"\'";
+		try {
+		Query<LeadAgentUser> theQuery=currentSession.createQuery(query,LeadAgentUser.class);
+	
+		LeadAgentUser usr=theQuery.getSingleResult();
+		String pass=usr.getPassword();
+		return pass;}
 		catch(Exception e) {
 			return "";
 		}
