@@ -34,11 +34,11 @@ body{
 
   <div class="form-group">
     <label for="from">From:</label>
-    <input type="date" class="form-control" name="from">
+    <input type="date" class="form-control" name="from" required="required">
   </div>
   <div class="form-group">
    <label for="to">To:</label>
-    <input type="date" class="form-control" name="to">
+    <input type="date" class="form-control" name="to" required="required">
   </div>
   
   <button type="submit" class="btn btn-default">Get Report</button>
@@ -56,11 +56,11 @@ body{
 
   <div class="form-group">
     <label for="from">From:</label>
-    <input type="date" class="form-control" name="from">
+    <input type="date" class="form-control" name="from" required="required">
   </div>
   <div class="form-group">
    <label for="to">To:</label>
-    <input type="date" class="form-control" name="to">
+    <input type="date" class="form-control" name="to" required="required">
   </div>
   
   <button type="submit" class="btn btn-default">Get Report</button>

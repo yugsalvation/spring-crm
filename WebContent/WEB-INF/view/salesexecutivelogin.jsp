@@ -43,10 +43,10 @@ body{
 <label for="username">username:</label> <form:input class="form-control" path="username"/><br/>
 <label for="password">password:</label><form:input type="password" class="form-control" path="password"/> <br/>
 <div class="row" align="center">
+<p style="color:red">${message}</p>
 <button type="submit" class="btn">submit</button>
-<form:form action="SalesExecutivePage" modelAttribute="salesexeuser">
-<button type="submit" class="btn">forgot password?</button>
-</form:form>
+<button type="button" onclick="window.location.href='salesexForgotPassword'" class="btn">Forgot Password</button>
+
 </div>
 
 </div>

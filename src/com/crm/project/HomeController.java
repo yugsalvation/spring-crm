@@ -30,6 +30,7 @@ import org.springframework.ui.Model;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.SessionAttributes;
 import org.springframework.web.multipart.MultipartFile;
@@ -84,7 +85,8 @@ public String ShowSalesLoginPage(Model theModel) {
 	Salesuser su=new Salesuser();
 	
 	theModel.addAttribute("salesusers",su);
-	
+	String m="";
+	theModel.addAttribute("message",m);
 	return "saleslogin";
 }
 
@@ -96,7 +98,8 @@ public String SalesPage(@ModelAttribute("salesusers") Salesuser su, ModelMap the
 	String idsalesuser=salesuserdao.getSalesuser(su.getUsername(), su.getPassword());
 	
 	if(idsalesuser.equals("")) {
-		//u.setMessage("invalid");
+		String m="incorrect username/password";
+		theModel.addAttribute("message",m);
 		return "saleslogin";
 		}
 	else {
@@ -197,6 +200,8 @@ private SalesExecutiveuserDao salesexecutiveuserdao;
 public String ShowSalesExecutiveLoginPage(Model theModel) {
 	SalesExecutiveuser u=new SalesExecutiveuser();
 	theModel.addAttribute("salesexeuser",u);
+	String m="";
+	theModel.addAttribute("message",m);
 	return "salesexecutivelogin";
 }
 
@@ -207,7 +212,8 @@ public String SalesExecutivePage(@ModelAttribute("salesexeuser") SalesExecutiveu
 	String idseuser=salesexecutiveuserdao.getSalesExecutiveuser(seu.getUsername(), seu.getPassword());
 	
 	if(idseuser.equals("")) {
-		//u.setMessage("invalid");
+		String m="incorrect username/password";
+		theModel.addAttribute("message",m);
 		return "salesexecutivelogin";
 		}
 	else {
@@ -218,6 +224,60 @@ public String SalesExecutivePage(@ModelAttribute("salesexeuser") SalesExecutiveu
 		
 		return "salesexecutivehome";
 	}
+}
+
+@RequestMapping("/salesexForgotPassword")
+public String ShowSalesexForgotPasswordPage(Model theModel) throws Exception {
+	Emails e=new Emails();
+	theModel.addAttribute("emails",e);
+	
+	return "forgotSalesexPassword";
+}
+@RequestMapping("/processsalesexForgotPassword")
+public String ShowProcessSalesexForgotPasswordPage(Model theModel,@ModelAttribute("emails") Emails e) throws Exception {
+	String passwords=salesexecutiveuserdao.forgotPassword(e.getTo1(),e.getSeuserid());
+	if(!passwords.equals("")) {
+	try {
+		Properties props=System.getProperties();
+		String to=e.getTo1();
+		String subject="forgot password";
+		String message="your password is: \n"+passwords;
+		message = message.replace("\n", "<br/>");
+			
+			e.setFrom("crmsystemspvtltd@gmail.com");
+			
+			e.setUsername("crmsystemspvtltd");
+			e.setPassword("Dada@3232");
+			String username=e.getUsername();
+			String password=e.getPassword();
+			String from=e.getFrom();
+		props.put("mail.smtp.host","smtp.gmail.com");
+		props.put("mail.smtp.auth","true");
+		props.put("mail.smtp.port","465");
+		props.put("mail.smtp.socketFactory.class","javax.net.ssl.SSLSocketFactory");
+		props.put("mail.smtp.socketFactory.port","465");
+		props.put("mail.smtp.socketFactory.fallback","false");
+		Session mailSession=Session.getDefaultInstance(props,null);
+		mailSession.setDebug(true);
+		Message mailMessage=new MimeMessage(mailSession);
+		mailMessage.setFrom(new InternetAddress(from));
+		mailMessage.setRecipient(Message.RecipientType.TO, new InternetAddress(to));
+		mailMessage.setContent(message,"text/html");
+		mailMessage.setSubject(subject);
+		Transport transport=mailSession.getTransport("smtp");
+		transport.connect("smtp.gmail.com",username,password);
+		transport.sendMessage(mailMessage,mailMessage.getAllRecipients());
+		
+		
+		}
+		catch(Exception ex)
+		{
+			System.out.println(ex);
+		}
+	}
+	SalesExecutiveuser u=new SalesExecutiveuser();
+	theModel.addAttribute("salesexeuser",u);
+	return "salesexecutivelogin";
 }
 
 @RequestMapping("/salesexMyOpportunities")
@@ -287,6 +347,15 @@ public String ShowSalesexTasksPage(Model theModel,@ModelAttribute("id") String s
 	
 	return "salesextasks";
 }
+@RequestMapping("/dropSalesexTasks")
+public String ShowDropSalesexTasksPage(Model theModel,@ModelAttribute("id") String seid,@RequestParam("taskid")int tid) throws Exception {
+	
+	tasksdao.dropTask(tid);
+	List<Tasks> tasks=tasksdao.getSalesexTasks(seid);
+	theModel.addAttribute("tasks",tasks);
+	
+	return "salesextasks";
+}
 
 @RequestMapping("/updatetask")
 public String ShowUpdateTaskPage(Model theModel,@RequestParam("taskid")int tid) {
@@ -319,6 +388,18 @@ public String ShowSalesexMyTasksPage(Model theModel,@ModelAttribute("id") String
 	
 	return "mytasks";
 }
+
+@RequestMapping("/dropSalesexMyTasks")
+public String ShowDropSalesexMyTasksPage(Model theModel,@ModelAttribute("id") String seid,@RequestParam("taskid")int tid) throws Exception {
+	
+	tasksdao.dropTask(tid);
+	List<Tasks> tasks=tasksdao.getSalesexmyTasks(seid);
+	theModel.addAttribute("tasks",tasks);
+	
+	return "mytasks";
+}
+
+
 
 @RequestMapping("/sendEmail")
 public String ShowSendEmailPage(Model theModel,@ModelAttribute("id") String seid,@RequestParam("taskid")int tid) {
@@ -392,9 +473,17 @@ public String ShowSalesexRemindersPage(Model theModel,@ModelAttribute("id") Stri
 	
 	return "salesexreminders";
 }
-
+@RequestMapping("/dropRemindersalesexTasks")
+public String ShowDropReminderSalesexTasksPage(Model theModel,@ModelAttribute("id") String seid,@RequestParam("taskid")int tid) throws Exception {
+	
+	tasksdao.dropTask(tid);
+	List<Tasks> tasks=tasksdao.getSalesexTodayTasks(seid);
+	theModel.addAttribute("reminders",tasks);
+	
+	return "salesexreminders";
+}
 @RequestMapping("/addCustomer")
-public String ShowAddCustomerPage(Model theModel,@ModelAttribute("id") String seid,@RequestParam("oppid")String oppid) throws Exception {
+public String ShowAddCustomerPage(Model theModel,@ModelAttribute("id") String seid,@RequestParam("oppid")String oppid,@RequestParam("taskid")int tid) throws Exception {
 	
 	Opportunity o=opportunitydao.getOpportunity(oppid);
 	Customer c=new Customer();
@@ -411,16 +500,17 @@ public String ShowAddCustomerPage(Model theModel,@ModelAttribute("id") String se
 	java.sql.Date doc=java.sql.Date.valueOf(formatter.format(date));
 	c.setSignupdate(doc);
 	theModel.addAttribute("newcustomer",c);
-	
+	theModel.addAttribute("tid",tid);
 	return "addcustomer";
 }
 
 @Autowired
 CustomerDao customerdao;
 @RequestMapping("/processAddCustomer")
-public String ShowProcessAddCustomerPage(Model theModel,@ModelAttribute("id") String seid,@ModelAttribute("newcustomer") Customer c) throws Exception {
+public String ShowProcessAddCustomerPage(Model theModel,@ModelAttribute("id") String seid,@ModelAttribute("newcustomer") Customer c,@RequestParam("tid")int tid) throws Exception {
 	
 	customerdao.addCustomer(c);
+	tasksdao.completeTask(tid);
 	
 	return "salesexecutivehome";
 }
@@ -592,6 +682,8 @@ public String ShowLeadAgentLoginPage(Model theModel) {
 	/*	LeadAgentLogin u=new LeadAgentLogin();
 	theModel.addAttribute("leadagentuser",u); */
 	theModel.addAttribute("leadagentusers",leadagentusers);
+	String m="";
+	theModel.addAttribute("message",m);
 	return "leadagentlogin";
 }
 
@@ -605,7 +697,8 @@ public String leadAgentPage(@ModelAttribute("leadagentusers") LeadAgentUser u, M
 	String agentid=leadagentdao.getLeadAgentUser(u.getUname(), u.getPassword());
 	String minlead=new String("hello");
 	if(agentid.equals("")) {
-		//u.setMessage("invalid");
+		String m="incorrect username/password";
+		theModel.addAttribute("message",m);
 		return "leadagentlogin";
 		}
 	else {
@@ -688,7 +781,8 @@ public String ShowAccountUserLoginPage(Model theModel) {
 	//Accountuser au=new Accountuser();
 	
 	theModel.addAttribute("accountusers",new Accountuser());
-	
+	String m="";
+	theModel.addAttribute("message",m);
 	return "accountuserlogin";
 }
 
@@ -700,7 +794,8 @@ public String ShowAccountUserPage(@ModelAttribute("accountusers") Accountuser au
 	String idacuser=accountuserdao.getAccountuser(au.getUsername(), au.getPassword());
 	
 	if(idacuser.equals("")) {
-		//u.setMessage("invalid");
+		String m="incorrect username/password";
+		theModel.addAttribute("message",m);
 		return "accountuserlogin";
 		}
 	else {

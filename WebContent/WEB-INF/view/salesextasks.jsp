@@ -44,7 +44,7 @@ body{
         <th>TOM</th>
         <th></th>
        	<th></th>
-       	<th></th>
+       	
       </tr>
     </thead>
     <tbody>
@@ -53,13 +53,11 @@ body{
     <c:url var="update" value="/updatetask">
     	<c:param name="taskid" value="${tasks.idtasks}"></c:param>
     </c:url>
-    <c:url var="dropopp" value="/dropopportunity">
-    	<c:param name="opportunityid" value="${tasks.idtasks}"></c:param>
+	  <c:url var="drop" value="/dropSalesexTasks">
+    	<c:param name="taskid" value="${tasks.idtasks}"></c:param>
     </c:url>
     
-      <c:url var="sendopp" value="/sendopportunity">
-    	<c:param name="opportunityid" value="${tasks.idtasks}"></c:param>
-    </c:url>
+     
     
       <tr class="active">
       	<td>${tasks.oid}</td>
@@ -75,8 +73,9 @@ body{
         <td>
         <a href="${update}">Update</a>
         </td>
-        <td> <a href="${dropopp}" onclick="return myFunction()">drop</a></td>
-      	<td><a href="${sendopp}">Send</a></td>
+        <td> <a href="${drop}" onclick="return myFunction()">Drop</a></td>
+      
+      	
       </tr>
      </c:forEach>
     </tbody>
@@ -87,7 +86,7 @@ body{
 	<script>
 function myFunction() {
   var txt;
-  if (confirm("are you sure to drop opportunity?!")) {
+  if (confirm("are you sure to drop Task?!")) {
   
   } else {
 	return false;

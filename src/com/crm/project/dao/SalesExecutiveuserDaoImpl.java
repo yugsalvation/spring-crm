@@ -29,11 +29,15 @@ public class SalesExecutiveuserDaoImpl implements SalesExecutiveuserDao {
 	public String getSalesExecutiveuser(String uname, String password) {
 		Session currentSession=sessionFactory.getCurrentSession();
 		String query="from SalesExecutiveuser seu where seu.username="+"\'"+uname+"\'"+" AND seu.password="+"\'"+password+"\'";
+		try {
 		Query<SalesExecutiveuser> theQuery=currentSession.createQuery(query,SalesExecutiveuser.class);
 		SalesExecutiveuser usr=theQuery.getSingleResult();
 		String id=usr.getIdseuser();
 
-		return id;
+		return id;}
+		catch(Exception e) {
+			return "";
+		}
 	}
 
 	@Override
@@ -81,6 +85,22 @@ Session currentSession=sessionFactory.getCurrentSession();
 		e.setPassword(usr.getEmailpassword());
 		
 		return e;
+	}
+
+	@Override
+	@Transactional
+	public String forgotPassword(String email,String seusrid) {
+		Session currentSession=sessionFactory.getCurrentSession();
+		String query="from SalesExecutiveuser seu where seu.idseuser="+"\'"+seusrid+"\' and emailid=\'"+email+"\'";
+		try {
+		Query<SalesExecutiveuser> theQuery=currentSession.createQuery(query,SalesExecutiveuser.class);
+	
+		SalesExecutiveuser usr=theQuery.getSingleResult();
+		String pass=usr.getPassword();
+		return pass;}
+		catch(Exception e) {
+			return "";
+		}
 	}
 	
 	

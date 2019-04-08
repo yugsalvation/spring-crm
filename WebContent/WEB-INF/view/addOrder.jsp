@@ -34,8 +34,8 @@ body{
 </form:select>
 <br/>
 
-<label for="billdate">Bill Date:</label><form:input type="date"  class="form-control" path="billdate" /> <br/>
-<label for="duedate">Due Date:</label><form:input type="date"  class="form-control" path="duedate" /> <br/>
+<label for="billdate">Bill Date:</label><form:input type="date"  class="form-control" path="billdate" required="required"/> <br/>
+<label for="duedate">Due Date:</label><form:input type="date"  class="form-control" path="duedate" required="required" /> <br/>
 
 
 <button type="submit" class="btn" style="background-color:rgb(0,0,0,0.8); color:white">Add Order</button>

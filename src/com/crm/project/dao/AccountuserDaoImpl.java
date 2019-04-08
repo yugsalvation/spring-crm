@@ -25,11 +25,15 @@ public class AccountuserDaoImpl implements AccountuserDao {
 	public String getAccountuser(String uname, String password) {
 		Session currentSession=sessionFactory.getCurrentSession();
 		String query="from Accountuser au where au.username="+"\'"+uname+"\'"+" AND au.password="+"\'"+password+"\'";
+		try {
 		Query<Accountuser> theQuery=currentSession.createQuery(query,Accountuser.class);
 		Accountuser usr=theQuery.getSingleResult();
 		String id=usr.getIdaccountuser();
 
-		return id;
+		return id;}
+		catch(Exception e) {
+			return "";
+		}
 	}
 
 	@Override

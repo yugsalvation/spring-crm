@@ -49,11 +49,20 @@ public class Order {
 	@Column(name="invoices")	
 	private int invoices;
 	
-
-	
 	@Column(name="dropp")	
 	private int dropp;
 	
+	@Column(name="paydate")	
+	private Date paydate;
+	
+	public Date getPaydate() {
+		return paydate;
+	}
+
+	public void setPaydate(Date paydate) {
+		this.paydate = paydate;
+	}
+
 	public int getDropp() {
 		return dropp;
 	}

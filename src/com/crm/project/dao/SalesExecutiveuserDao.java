@@ -7,6 +7,6 @@ public interface SalesExecutiveuserDao {
 	public String getSalesExecutiveuser(String a,String b);
 	public String lessOppSalesExecutiveuser();
 	public void incrementoppnumber(String id);
-	
+	public String forgotPassword(String email,String seusrid);
 	public Emails getEmailsid(String id);
 }

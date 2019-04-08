@@ -42,6 +42,7 @@ body{
         <th>DOM</th>
         <th>TOM</th>
         <th></th>
+        <th></th>
        	
       </tr>
     </thead>
@@ -50,7 +51,12 @@ body{
     <c:forEach var="reminders" items="${reminders}">
     <c:url var="send" value="/addCustomer">
     	<c:param name="oppid" value="${reminders.oid}"></c:param>
+    	<c:param name="taskid" value="${reminders.idtasks}">
+    	</c:param>
     	
+    </c:url>
+      <c:url var="drop" value="/dropRemindersalesexTasks">
+    	<c:param name="taskid" value="${tasks.idtasks}"></c:param>
     </c:url>
 
     
@@ -68,6 +74,7 @@ body{
         <td>
         <a href="${send}">Add Customer</a>
         </td>
+         <td> <a href="${drop}" onclick="return myFunction()">Drop</a></td>
       
       </tr>
      </c:forEach>
@@ -76,6 +83,16 @@ body{
   <br/>
 
   </div>
+<script>
+function myFunction() {
+  var txt;
+  if (confirm("are you sure to drop Task?!")) {
+  
+  } else {
+	return false;
+  }
 
+}
+</script>
 </body>
 </html>

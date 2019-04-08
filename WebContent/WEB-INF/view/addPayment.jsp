@@ -31,8 +31,9 @@ body{
 
 <label for="billdate">Bill Date:</label><form:input  class="form-control" path="billdate" value="${order.billdate}" readonly="true"/> <br/>
 <label for="duedate">Due Date:</label><form:input   class="form-control" path="duedate" value="${order.duedate}" readonly="true" /> <br/>
-<label for="amount">Amount:</label><form:input  class="form-control" path="amount" value="${order.amount}"/> <br/>
-<label for="referencenumber">Reference Number:</label><form:input  class="form-control" path="referencenumber"/> <br/>
+<label for="paydate">Payment Date:</label><form:input   class="form-control" path="paydate" required="required" /> <br/>
+<label for="amount">Amount:</label><form:input  class="form-control" path="amount" value="${order.amount}" required="required"/> <br/>
+<label for="referencenumber">Reference Number:</label><form:input  class="form-control" path="referencenumber" required="required"/> <br/>
 <button type="submit" class="btn" style="background-color:rgb(0,0,0,0.8); color:white">Add Payment</button>
 </div>
 </form:form>

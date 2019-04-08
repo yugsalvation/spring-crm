@@ -33,10 +33,14 @@ public class LeadAgentUserDaoImpl implements LeadAgentUserDao {
 	public String getLeadAgentUser(String uname,String password) {
 		Session currentSession=sessionFactory.getCurrentSession();
 		String query="from LeadAgentUser l where l.uname="+"\'"+uname+"\'"+" AND l.password="+"\'"+password+"\'";
+		try {
 		Query<LeadAgentUser> theQuery=currentSession.createQuery(query,LeadAgentUser.class);
 		LeadAgentUser usr=theQuery.getSingleResult();
 		String id=usr.getAgentid();
 
-		return id;
+		return id;}
+		catch(Exception e) {
+			return "";
+		}
 	}
 }

@@ -7,6 +7,27 @@ public class Emails {
 	private String username;
 	private String password;
 	private String subject;
+	private String seuserid;
+	private String suserid;
+	private String leaduserid;
+	public String getSeuserid() {
+		return seuserid;
+	}
+	public void setSeuserid(String seuserid) {
+		this.seuserid = seuserid;
+	}
+	public String getSuserid() {
+		return suserid;
+	}
+	public void setSuserid(String suserid) {
+		this.suserid = suserid;
+	}
+	public String getLeaduserid() {
+		return leaduserid;
+	}
+	public void setLeaduserid(String leaduserid) {
+		this.leaduserid = leaduserid;
+	}
 	private int taskid;
 
 	public int getTaskid() {

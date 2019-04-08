@@ -28,11 +28,15 @@ public class SalesuserDaoImpl implements SalesuserDao {
 	public String getSalesuser(String uname, String password) {
 		Session currentSession=sessionFactory.getCurrentSession();
 		String query="from Salesuser su where su.username="+"\'"+uname+"\'"+" AND su.password="+"\'"+password+"\'";
+		try {
 		Query<Salesuser> theQuery=currentSession.createQuery(query,Salesuser.class);
 		Salesuser usr=theQuery.getSingleResult();
 		String id=usr.getIdsalesuser();
 
-		return id;
+		return id;}
+		catch(Exception e) {
+			return "";
+		}
 	}
 
 	@Override
