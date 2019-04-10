@@ -31,7 +31,8 @@ body{
 
 <body >
  <div class="container-fluid">
- <table class="table" style="margin-top:15%" >
+  <h1 style="text-align:center;">LEADS</h1>
+ <table class="table" style="margin-top:3%" >
     <thead>
       <tr class="active">
         <th>Lead id</th>
@@ -40,7 +41,7 @@ body{
         <th>Email id</th>
         <th>Contact number</th>
         <th>City</th>
-        <th>Lesad agent</th>
+        <th>Lead agent</th>
         <th></th>
       </tr>
     </thead>

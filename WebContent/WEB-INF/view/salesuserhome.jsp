@@ -41,16 +41,13 @@ function resizeIframe(iframeID)
 <nav class="navbar navbar-inverse">
   <div class="container-fluid">
     <div class="navbar-header">
-      <a class="navbar-brand" href="#">CRM systems</a>
+      <a class="navbar-brand" href="javascript:window.location.reload()">CRM systems</a>
     </div>
     <ul class="nav navbar-nav">
-      <li class="active"><a href="#">Home</a></li>
+      <li><a href="javascript:window.location.reload()">Home</a></li>
       <li><a href="javascript:loadFrame('SalesLeadPage')">Leads</a></li>
-      <li><a href="javascript:loadFrame('newPayment')">Payment</a></li>
-      <li><a href="javascript:loadFrame('customer')">Customers</a></li>
-     
-	  <li><a href="javascript:loadFrame('salesMyOpportunities')">Opportunity</a></li>
-	
+	  <li><a href="javascript:loadFrame('salesMyOpportunities')">Opportunities</a></li>
+	  <li><a href="javascript:loadFrame('getSalesReports')">Reports</a></li>
 	  	
     </ul>
     <ul class="nav navbar-nav navbar-right">

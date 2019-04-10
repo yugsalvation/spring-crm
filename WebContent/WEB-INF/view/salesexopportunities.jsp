@@ -30,8 +30,8 @@ body{
 </head>
 
 <body >
-
- <div class="container-fluid" style="margin-top:10%;text-align:center">
+   <h1 style="text-align:center;">PROSPECTIVE CUSTOMERS</h1>
+ <div class="container-fluid" style="margin-top:3%;text-align:center">
  
  <form class="form-inline" action="salesexSearchOpportunity" >
   <div class="form-group">
@@ -49,7 +49,7 @@ body{
  <table class="table" style="margin-top:5%" >
     <thead>
       <tr class="active">
-        <th>oid</th>
+        <th>Oid</th>
         <th>Name</th>
         <th>Walking date</th>
         <th>Email id</th>

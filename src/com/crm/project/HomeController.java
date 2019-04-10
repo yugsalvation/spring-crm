@@ -332,6 +332,30 @@ public String ShowSendOpportunityPage(Model theModel,@ModelAttribute("id") Strin
 	return "myOpportunities";
 }
 
+@RequestMapping("/getSalesReports")
+public String ShowSalesGetReportsPage(Model theModel,@ModelAttribute("id") String sid) throws Exception {
+	
+	
+	return "getSalesReports";
+}
+
+@RequestMapping("/getSalesOppReports")
+public void ShowSalesGetOppReportsPage(Model theModel,@ModelAttribute("id") String sid,@RequestParam("from")java.sql.Date from,@RequestParam("to")java.sql.Date to,HttpServletRequest request,HttpServletResponse response) throws Exception {
+	String x=opportunitydao.getSOppReport(sid, from, to);response.setContentType("application/pdf");
+	response.addHeader("content-disposition", "attachment; filename="+from+"_"+to+".pdf");
+	String dataDirectory = request.getServletContext().getRealPath("/WebContent/resources/");
+	Path file = Paths.get("C:/Users/charm/eclipse-workspace/spring-crm/WebContent/resources/reports/salesemployee/"+sid+"/OPPORTUNITY/", from+"_"+to+".pdf");
+	try
+    {
+        Files.copy(file, response.getOutputStream());
+        response.getOutputStream().flush();
+    }
+    catch (IOException ex) {
+        ex.printStackTrace();
+    }
+	
+
+}
 
 @Autowired
 private SalesExecutiveuserDao salesexecutiveuserdao;

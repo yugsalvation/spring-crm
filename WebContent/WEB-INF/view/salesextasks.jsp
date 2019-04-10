@@ -31,11 +31,11 @@ body{
 
 <body >
  <div class="container-fluid">
- <h1>Tasks</h1>
+  <h1 style="text-align:center;">TASKS</h1>
  <table class="table" style="margin-top:3%" >
     <thead>
       <tr class="active">
-        <th>Opportunity id</th>
+        <th>Oid</th>
         <th>Fname</th>
         <th>Lname</th>
         <th>DOC</th>

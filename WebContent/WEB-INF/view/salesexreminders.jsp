@@ -31,7 +31,8 @@ body{
 
 <body >
  <div class="container-fluid">
- <table class="table" style="margin-top:15%" >
+ <h1 style="text-align:center;">MY REMINDERS</h1>
+ <table class="table" style="margin-top:3%" >
     <thead>
       <tr class="active">
         <th>Opportunity id</th>
