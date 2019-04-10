@@ -102,6 +102,32 @@ Session currentSession=sessionFactory.getCurrentSession();
 			return "";
 		}
 	}
+
+	@Override
+	@Transactional
+	public String getPassword(String id) {
+		Session currentSession=sessionFactory.getCurrentSession();
+		String query="from SalesExecutiveuser seu where seu.idseuser="+"\'"+id+"\'";
+		try {
+		Query<SalesExecutiveuser> theQuery=currentSession.createQuery(query,SalesExecutiveuser.class);
+	
+		SalesExecutiveuser usr=theQuery.getSingleResult();
+		String pass=usr.getPassword();
+		return pass;}
+		catch(Exception e) {
+			return "";
+		}
+	}
+
+	@Override
+	@Transactional
+	public void changePassword(String id, String newpass) {
+		Session currentSession=sessionFactory.getCurrentSession();
+		String query="update SalesExecutiveuser set password=\'"+newpass+"\' where idseuser="+"\'"+id+"\'";
+		Query thequery=currentSession.createQuery(query);
+		int result=thequery.executeUpdate();
+		
+	}
 	
 	
 

@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.crm.project.Emails;
 import com.crm.project.entity.LeadAgentUser;
 import com.crm.project.entity.Salesuser;
 @Repository
@@ -59,5 +60,46 @@ public class LeadAgentUserDaoImpl implements LeadAgentUserDao {
 		catch(Exception e) {
 			return "";
 		}
+	}
+
+	@Override
+	@Transactional
+	public String getPassword(String id) {
+		Session currentSession=sessionFactory.getCurrentSession();
+		String query="from LeadAgentUser su where su.agentid="+"\'"+id+"\'";
+		try {
+		Query<LeadAgentUser> theQuery=currentSession.createQuery(query,LeadAgentUser.class);
+	
+		LeadAgentUser usr=theQuery.getSingleResult();
+		String pass=usr.getPassword();
+		return pass;}
+		catch(Exception e) {
+			return "";
+		}
+	}
+
+	@Override
+	@Transactional
+	public void changePassword(String id, String newpass) {
+		Session currentSession=sessionFactory.getCurrentSession();
+		String query="update LeadAgentUser set password=\'"+newpass+"\' where agentid="+"\'"+id+"\'";
+		Query thequery=currentSession.createQuery(query);
+		int result=thequery.executeUpdate();
+		
+	}
+
+	@Override
+	@Transactional
+	public Emails getEmailsid(String id) {
+		Session currentSession=sessionFactory.getCurrentSession();
+		String query="from LeadAgentUser su where su.agentid="+"\'"+id+"\'";
+		Query<LeadAgentUser> theQuery=currentSession.createQuery(query,LeadAgentUser.class);
+		LeadAgentUser usr=theQuery.getSingleResult();
+		Emails e=new Emails();
+		e.setFrom(usr.getEmailid());
+		e.setUsername(usr.getUseremail());
+		e.setPassword(usr.getEmailpassword());
+		
+		return e;
 	}
 }

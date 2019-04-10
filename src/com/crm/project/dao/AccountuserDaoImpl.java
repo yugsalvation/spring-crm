@@ -11,8 +11,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.crm.project.Emails;
 import com.crm.project.entity.Accountuser;
 import com.crm.project.entity.SalesExecutiveuser;
+import com.crm.project.entity.Salesuser;
 
 @Repository
 public class AccountuserDaoImpl implements AccountuserDao {
@@ -65,5 +67,63 @@ public class AccountuserDaoImpl implements AccountuserDao {
 		int result=thequery.executeUpdate();
 
 	}
+
+	@Override
+	@Transactional
+	public String forgotPassword(String email, String acusrid) {
+		Session currentSession=sessionFactory.getCurrentSession();
+		String query="from Accountuser su where su.idaccountuser="+"\'"+acusrid+"\' and emailid=\'"+email+"\'";
+		try {
+		Query<Accountuser> theQuery=currentSession.createQuery(query,Accountuser.class);
+	
+		Accountuser usr=theQuery.getSingleResult();
+		String pass=usr.getPassword();
+		return pass;}
+		catch(Exception e) {
+			return "";
+		}
+	}
+	
+	@Override
+	@Transactional
+	public String getPassword(String id) {
+		Session currentSession=sessionFactory.getCurrentSession();
+		String query="from Accountuser su where su.idaccountuser="+"\'"+id+"\'";
+		try {
+		Query<Accountuser> theQuery=currentSession.createQuery(query,Accountuser.class);
+	
+		Accountuser usr=theQuery.getSingleResult();
+		String pass=usr.getPassword();
+		return pass;}
+		catch(Exception e) {
+			return "";
+		}
+	}
+
+	@Override
+	@Transactional
+	public void changePassword(String id, String newpass) {
+		Session currentSession=sessionFactory.getCurrentSession();
+		String query="update Accountuser set password=\'"+newpass+"\' where idaccountuser="+"\'"+id+"\'";
+		Query thequery=currentSession.createQuery(query);
+		int result=thequery.executeUpdate();
+		
+	}
+
+	@Override
+	@Transactional
+	public Emails getEmailsid(String id) {
+		Session currentSession=sessionFactory.getCurrentSession();
+		String query="from Accountuser su where su.idaccountuser="+"\'"+id+"\'";
+		Query<Accountuser> theQuery=currentSession.createQuery(query,Accountuser.class);
+		Accountuser usr=theQuery.getSingleResult();
+		Emails e=new Emails();
+		e.setFrom(usr.getEmailid());
+		e.setUsername(usr.getUseremail());
+		e.setPassword(usr.getEmailpassword());
+		
+		return e;
+	}
+	
 
 }

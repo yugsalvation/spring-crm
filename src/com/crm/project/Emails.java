@@ -10,6 +10,13 @@ public class Emails {
 	private String seuserid;
 	private String suserid;
 	private String leaduserid;
+	private String acuserid;
+	public String getAcuserid() {
+		return acuserid;
+	}
+	public void setAcuserid(String acuserid) {
+		this.acuserid = acuserid;
+	}
 	public String getSeuserid() {
 		return seuserid;
 	}

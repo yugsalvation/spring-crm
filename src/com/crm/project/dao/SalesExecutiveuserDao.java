@@ -9,4 +9,6 @@ public interface SalesExecutiveuserDao {
 	public void incrementoppnumber(String id);
 	public String forgotPassword(String email,String seusrid);
 	public Emails getEmailsid(String id);
+	public String getPassword(String id);
+	public void changePassword(String id,String newpass);
 }

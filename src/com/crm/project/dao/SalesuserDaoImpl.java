@@ -16,6 +16,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.crm.project.Emails;
 import com.crm.project.entity.LeadAgentUser;
 import com.crm.project.entity.SalesExecutiveuser;
 import com.crm.project.entity.Salesuser;
@@ -84,6 +85,47 @@ public class SalesuserDaoImpl implements SalesuserDao {
 		catch(Exception e) {
 			return "";
 		}
+	}
+
+	@Override
+	@Transactional
+	public String getPassword(String id) {
+		Session currentSession=sessionFactory.getCurrentSession();
+		String query="from Salesuser su where su.idsalesuser="+"\'"+id+"\'";
+		try {
+		Query<Salesuser> theQuery=currentSession.createQuery(query,Salesuser.class);
+	
+		Salesuser usr=theQuery.getSingleResult();
+		String pass=usr.getPassword();
+		return pass;}
+		catch(Exception e) {
+			return "";
+		}
+	}
+
+	@Override
+	@Transactional
+	public void changePassword(String id, String newpass) {
+		Session currentSession=sessionFactory.getCurrentSession();
+		String query="update Salesuser set password=\'"+newpass+"\' where idsalesuser="+"\'"+id+"\'";
+		Query thequery=currentSession.createQuery(query);
+		int result=thequery.executeUpdate();
+		
+	}
+
+	@Override
+	@Transactional
+	public Emails getEmailsid(String id) {
+		Session currentSession=sessionFactory.getCurrentSession();
+		String query="from Salesuser su where su.idsalesuser="+"\'"+id+"\'";
+		Query<Salesuser> theQuery=currentSession.createQuery(query,Salesuser.class);
+		Salesuser usr=theQuery.getSingleResult();
+		Emails e=new Emails();
+		e.setFrom(usr.getEmailid());
+		e.setUsername(usr.getUseremail());
+		e.setPassword(usr.getEmailpassword());
+		
+		return e;
 	}
 	
 

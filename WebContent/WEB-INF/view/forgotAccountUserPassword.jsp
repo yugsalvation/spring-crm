@@ -38,9 +38,9 @@ body{
    <div class="col-sm-4"></div>
  <div class="col-sm-4">
  
-<form:form action="processsalesexForgotPassword" modelAttribute="emails" style="background-color:rgb(220,220,220,0.8);padding:10%;">
+<form:form action="processAccountUserForgotPassword" modelAttribute="emails" style="background-color:rgb(220,220,220,0.8);padding:10%;">
    <div class="form-group">
-<label for="id">SE ID:</label> <form:input class="form-control" path="seuserid"/><br/>
+<label for="id">AC ID:</label> <form:input class="form-control" path="acuserid"/><br/>
 <label for="emailid">emailid:</label><form:input  class="form-control" path="to1"/> <br/>
 <div class="row" align="center">
 <p style="color:red">${message}</p>

@@ -117,7 +117,8 @@ public String SalesPage(@ModelAttribute("salesusers") Salesuser su, ModelMap the
 public String ShowSalesForgotPasswordPage(Model theModel) throws Exception {
 	Emails e=new Emails();
 	theModel.addAttribute("emails",e);
-	
+	String m="";
+	theModel.addAttribute("message",m);
 	return "forgotSalesPassword";
 }
 @RequestMapping("/processsalesForgotPassword")
@@ -161,15 +162,95 @@ public String ShowProcessSalesForgotPasswordPage(Model theModel,@ModelAttribute(
 		{
 			System.out.println(ex);
 		}
-	}
-Salesuser su=new Salesuser();
+	Salesuser su=new Salesuser();
 	
 	theModel.addAttribute("salesusers",su);
 	String m="";
 	theModel.addAttribute("message",m);
 	return "saleslogin";
+
+	}else {
+		String m="incorred id or emailid";
+		theModel.addAttribute("message",m);
+		Emails e1=new Emails();
+		theModel.addAttribute("emails",e1);
+		
+		return "forgotSalesPassword";
+	}
+
+}
+@RequestMapping("/salesChangePassword")
+public String ShowSalesChangePasswordPage(Model theModel) throws Exception {
+	String m="";
+	theModel.addAttribute("message",m);
+	return "salesChangePassword";
 }
 
+@RequestMapping(value="/processSalesChangePassword",method=RequestMethod.POST)
+public String ShowProcessSalesChangePasswordPage(Model theModel,@ModelAttribute("id") String sid,@RequestParam("old")String oldpass,@RequestParam("new")String newpass,@RequestParam("renew")String renewpass,HttpServletRequest request) throws Exception {
+	String pass=salesuserdao.getPassword(sid);
+	if(pass.equals(oldpass)) {
+			if(!newpass.equals(renewpass)) {
+				
+					String m="new and re-enter new password dont match";
+					theModel.addAttribute("message",m);
+					return "salesChangePassword";
+				
+			}
+			salesuserdao.changePassword(sid,newpass);
+		Emails e=salesuserdao.getEmailsid(sid);
+		try {
+			
+			Properties props=System.getProperties();
+			String to=e.getFrom();
+			String subject="ALERT! password changed!";
+			String message="your password was changed";
+			message = message.replace("\n", "<br/>");
+				
+				e.setFrom("crmsystemspvtltd@gmail.com");
+				
+				e.setUsername("crmsystemspvtltd");
+				e.setPassword("Dada@3232");
+				String username=e.getUsername();
+				String password=e.getPassword();
+				String from=e.getFrom();
+			props.put("mail.smtp.host","smtp.gmail.com");
+			props.put("mail.smtp.auth","true");
+			props.put("mail.smtp.port","465");
+			props.put("mail.smtp.socketFactory.class","javax.net.ssl.SSLSocketFactory");
+			props.put("mail.smtp.socketFactory.port","465");
+			props.put("mail.smtp.socketFactory.fallback","false");
+			Session mailSession=Session.getDefaultInstance(props,null);
+			mailSession.setDebug(true);
+			Message mailMessage=new MimeMessage(mailSession);
+			mailMessage.setFrom(new InternetAddress(from));
+			mailMessage.setRecipient(Message.RecipientType.TO, new InternetAddress(to));
+			mailMessage.setContent(message,"text/html");
+			mailMessage.setSubject(subject);
+			Transport transport=mailSession.getTransport("smtp");
+			transport.connect("smtp.gmail.com",username,password);
+			transport.sendMessage(mailMessage,mailMessage.getAllRecipients());
+			
+			
+			}
+			catch(Exception ex)
+			{
+				System.out.println(ex);
+			}
+	
+	HttpSession httpSession = request.getSession();
+    httpSession.invalidate();
+    Salesuser su=new Salesuser();
+	theModel.addAttribute("salesusers",su);
+	String m="";
+	theModel.addAttribute("message",m);
+	return "saleslogin";}
+	else {
+		String m="wrong old password";
+		theModel.addAttribute("message",m);
+		return "salesChangePassword";
+	}
+	}
 @RequestMapping("/SalesLeadPage")
 public String ShowSalesLeadPage(Model theModel,@ModelAttribute("id") String id) {
 	List<Leads>l=leadsdao.getSalesLeads(id); 
@@ -288,7 +369,8 @@ public String SalesExecutivePage(@ModelAttribute("salesexeuser") SalesExecutiveu
 public String ShowSalesexForgotPasswordPage(Model theModel) throws Exception {
 	Emails e=new Emails();
 	theModel.addAttribute("emails",e);
-	
+	String m="";
+	theModel.addAttribute("message",m);
 	return "forgotSalesexPassword";
 }
 @RequestMapping("/processsalesexForgotPassword")
@@ -332,13 +414,95 @@ public String ShowProcessSalesexForgotPasswordPage(Model theModel,@ModelAttribut
 		{
 			System.out.println(ex);
 		}
-	}
 	SalesExecutiveuser u=new SalesExecutiveuser();
 	theModel.addAttribute("salesexeuser",u);
 	String m="";
 	theModel.addAttribute("message",m);
 	return "salesexecutivelogin";
+	}
+	else {
+		String m="incorred id or emailid";
+		theModel.addAttribute("message",m);
+		Emails e1=new Emails();
+		theModel.addAttribute("emails",e1);
+		
+		return "forgotSalesexPassword";
+	}
+	
 }
+
+@RequestMapping("/salesexChangePassword")
+public String ShowSalesexChangePasswordPage(Model theModel) throws Exception {
+	String m="";
+	theModel.addAttribute("message",m);
+	return "salesexChangePassword";
+}
+
+@RequestMapping(value="/processSalesexChangePassword",method=RequestMethod.POST)
+public String ShowProcessSalesexChangePasswordPage(Model theModel,@ModelAttribute("id") String seid,@RequestParam("old")String oldpass,@RequestParam("new")String newpass,@RequestParam("renew")String renewpass,HttpServletRequest request) throws Exception {
+	String pass=salesexecutiveuserdao.getPassword(seid);
+	if(pass.equals(oldpass)) {
+			if(!newpass.equals(renewpass)) {
+				
+					String m="new and re-enter new password dont match";
+					theModel.addAttribute("message",m);
+					return "salesexChangePassword";
+				
+			}
+		salesexecutiveuserdao.changePassword(seid,newpass);
+		Emails e=salesexecutiveuserdao.getEmailsid(seid);
+		try {
+			
+			Properties props=System.getProperties();
+			String to=e.getFrom();
+			String subject="ALERT! password changed!";
+			String message="your password was changed";
+			message = message.replace("\n", "<br/>");
+				
+				e.setFrom("crmsystemspvtltd@gmail.com");
+				
+				e.setUsername("crmsystemspvtltd");
+				e.setPassword("Dada@3232");
+				String username=e.getUsername();
+				String password=e.getPassword();
+				String from=e.getFrom();
+			props.put("mail.smtp.host","smtp.gmail.com");
+			props.put("mail.smtp.auth","true");
+			props.put("mail.smtp.port","465");
+			props.put("mail.smtp.socketFactory.class","javax.net.ssl.SSLSocketFactory");
+			props.put("mail.smtp.socketFactory.port","465");
+			props.put("mail.smtp.socketFactory.fallback","false");
+			Session mailSession=Session.getDefaultInstance(props,null);
+			mailSession.setDebug(true);
+			Message mailMessage=new MimeMessage(mailSession);
+			mailMessage.setFrom(new InternetAddress(from));
+			mailMessage.setRecipient(Message.RecipientType.TO, new InternetAddress(to));
+			mailMessage.setContent(message,"text/html");
+			mailMessage.setSubject(subject);
+			Transport transport=mailSession.getTransport("smtp");
+			transport.connect("smtp.gmail.com",username,password);
+			transport.sendMessage(mailMessage,mailMessage.getAllRecipients());
+			
+			
+			}
+			catch(Exception ex)
+			{
+				System.out.println(ex);
+			}
+	
+	HttpSession httpSession = request.getSession();
+    httpSession.invalidate();
+    SalesExecutiveuser u=new SalesExecutiveuser();
+	theModel.addAttribute("salesexeuser",u);
+	String m="";
+	theModel.addAttribute("message",m);
+	return "salesexecutivelogin";}
+	else {
+		String m="wrong old password";
+		theModel.addAttribute("message",m);
+		return "salesexChangePassword";
+	}
+	}
 
 @RequestMapping("/salesexMyOpportunities")
 public String ShowSalesexOpportunityPage(Model theModel,@ModelAttribute("id") String seid) throws Exception {
@@ -774,7 +938,8 @@ public String leadAgentPage(@ModelAttribute("leadagentusers") LeadAgentUser u, M
 public String ShowLeadAgentForgotPasswordPage(Model theModel) throws Exception {
 	Emails e=new Emails();
 	theModel.addAttribute("emails",e);
-	
+	String m="";
+	theModel.addAttribute("message",m);
 	return "forgotLeadAgentPassword";
 }
 @RequestMapping("/processLeadAgentForgotPassword")
@@ -818,14 +983,95 @@ public String ShowProcessLeadAgentForgotPasswordPage(Model theModel,@ModelAttrib
 		{
 			System.out.println(ex);
 		}
-	}
 	LeadAgentUser leadagentusers=new LeadAgentUser();
 	theModel.addAttribute("leadagentusers",leadagentusers);
 	String m="";
 	theModel.addAttribute("message",m);
 	return "leadagentlogin";
+	}
+	else {
+		String m="incorred id or emailid";
+		Emails e1=new Emails();
+		theModel.addAttribute("emails",e1);
+		theModel.addAttribute("message",m);
+		return "forgotLeadAgentPassword";
+	}
+	
 
 }
+
+@RequestMapping("/leadAgentChangePassword")
+public String ShowLeadAgentChangePasswordPage(Model theModel) throws Exception {
+	String m="";
+	theModel.addAttribute("message",m);
+	return "leadAgentChangePassword";
+}
+
+@RequestMapping(value="/processLeadAgentChangePassword",method=RequestMethod.POST)
+public String ShowProcessLeadAgentChangePasswordPage(Model theModel,@ModelAttribute("id") String lusrid,@RequestParam("old")String oldpass,@RequestParam("new")String newpass,@RequestParam("renew")String renewpass,HttpServletRequest request) throws Exception {
+	String pass=leadagentdao.getPassword(lusrid);
+	if(pass.equals(oldpass)) {
+			if(!newpass.equals(renewpass)) {
+				
+					String m="new and re-enter new password dont match";
+					theModel.addAttribute("message",m);
+					return "leadAgentChangePassword";
+				
+			}
+			leadagentdao.changePassword(lusrid,newpass);
+		Emails e=leadagentdao.getEmailsid(lusrid);
+		try {
+			
+			Properties props=System.getProperties();
+			String to=e.getFrom();
+			String subject="ALERT! password changed!";
+			String message="your password was changed";
+			message = message.replace("\n", "<br/>");
+				
+				e.setFrom("crmsystemspvtltd@gmail.com");
+				
+				e.setUsername("crmsystemspvtltd");
+				e.setPassword("Dada@3232");
+				String username=e.getUsername();
+				String password=e.getPassword();
+				String from=e.getFrom();
+			props.put("mail.smtp.host","smtp.gmail.com");
+			props.put("mail.smtp.auth","true");
+			props.put("mail.smtp.port","465");
+			props.put("mail.smtp.socketFactory.class","javax.net.ssl.SSLSocketFactory");
+			props.put("mail.smtp.socketFactory.port","465");
+			props.put("mail.smtp.socketFactory.fallback","false");
+			Session mailSession=Session.getDefaultInstance(props,null);
+			mailSession.setDebug(true);
+			Message mailMessage=new MimeMessage(mailSession);
+			mailMessage.setFrom(new InternetAddress(from));
+			mailMessage.setRecipient(Message.RecipientType.TO, new InternetAddress(to));
+			mailMessage.setContent(message,"text/html");
+			mailMessage.setSubject(subject);
+			Transport transport=mailSession.getTransport("smtp");
+			transport.connect("smtp.gmail.com",username,password);
+			transport.sendMessage(mailMessage,mailMessage.getAllRecipients());
+			
+			
+			}
+			catch(Exception ex)
+			{
+				System.out.println(ex);
+			}
+	
+	HttpSession httpSession = request.getSession();
+    httpSession.invalidate();
+    LeadAgentUser leadagentusers=new LeadAgentUser();
+	theModel.addAttribute("leadagentusers",leadagentusers);
+	String m="";
+	theModel.addAttribute("message",m);
+	return "leadagentlogin";}
+	else {
+		String m="wrong old password";
+		theModel.addAttribute("message",m);
+		return "leadAgentChangePassword";
+	}
+	}
 
 @RequestMapping("/example")
 public String examplePage(ModelMap theModel) {
@@ -923,6 +1169,142 @@ public String ShowAccountUserPage(@ModelAttribute("accountusers") Accountuser au
 		return "accountuserhome";
 	}
 }
+
+@RequestMapping("/accountUserForgotPassword")
+public String ShowAccountUserForgotPasswordPage(Model theModel) throws Exception {
+	Emails e=new Emails();
+	theModel.addAttribute("emails",e);
+	String m="";
+	theModel.addAttribute("message",m);
+	return "forgotAccountUserPassword";
+}
+@RequestMapping("/processAccountUserForgotPassword")
+public String ShowProcessAccountUserForgotPasswordPage(Model theModel,@ModelAttribute("emails") Emails e) throws Exception {
+	String passwords=accountuserdao.forgotPassword(e.getTo1(),e.getAcuserid());
+	if(!passwords.equals("")) {
+	try {
+		Properties props=System.getProperties();
+		String to=e.getTo1();
+		String subject="forgot password";
+		String message="your password is: \n"+passwords;
+		message = message.replace("\n", "<br/>");
+			
+			e.setFrom("crmsystemspvtltd@gmail.com");
+			
+			e.setUsername("crmsystemspvtltd");
+			e.setPassword("Dada@3232");
+			String username=e.getUsername();
+			String password=e.getPassword();
+			String from=e.getFrom();
+		props.put("mail.smtp.host","smtp.gmail.com");
+		props.put("mail.smtp.auth","true");
+		props.put("mail.smtp.port","465");
+		props.put("mail.smtp.socketFactory.class","javax.net.ssl.SSLSocketFactory");
+		props.put("mail.smtp.socketFactory.port","465");
+		props.put("mail.smtp.socketFactory.fallback","false");
+		Session mailSession=Session.getDefaultInstance(props,null);
+		mailSession.setDebug(true);
+		Message mailMessage=new MimeMessage(mailSession);
+		mailMessage.setFrom(new InternetAddress(from));
+		mailMessage.setRecipient(Message.RecipientType.TO, new InternetAddress(to));
+		mailMessage.setContent(message,"text/html");
+		mailMessage.setSubject(subject);
+		Transport transport=mailSession.getTransport("smtp");
+		transport.connect("smtp.gmail.com",username,password);
+		transport.sendMessage(mailMessage,mailMessage.getAllRecipients());
+		
+		
+		}
+		catch(Exception ex)
+		{
+			System.out.println(ex);
+		}
+	theModel.addAttribute("accountusers",new Accountuser());
+	String m="";
+	theModel.addAttribute("message",m);
+	return "accountuserlogin";
+	}
+	else {
+		String m="incorred id or emailid";
+		Emails e1=new Emails();
+		theModel.addAttribute("emails",e1);
+		theModel.addAttribute("message",m);
+		return "forgotAccountUserPassword";
+	}
+	
+
+}
+@RequestMapping("/accountUserChangePassword")
+public String ShowAccountUserChangePassword(Model theModel) throws Exception {
+	String m="";
+	theModel.addAttribute("message",m);
+	return "accountUserChangePassword";
+}
+
+@RequestMapping(value="/processAccountUserChangePassword",method=RequestMethod.POST)
+public String ShowProcessAccountUserChangePasswordPage(Model theModel,@ModelAttribute("id") String acusrid,@RequestParam("old")String oldpass,@RequestParam("new")String newpass,@RequestParam("renew")String renewpass,HttpServletRequest request) throws Exception {
+	String pass=accountuserdao.getPassword(acusrid);
+	if(pass.equals(oldpass)) {
+			if(!newpass.equals(renewpass)) {
+				
+					String m="new and re-enter new password dont match";
+					theModel.addAttribute("message",m);
+					return "accountUserChangePassword";
+				
+			}
+			accountuserdao.changePassword(acusrid,newpass);
+		Emails e=accountuserdao.getEmailsid(acusrid);
+		try {
+			
+			Properties props=System.getProperties();
+			String to=e.getFrom();
+			String subject="ALERT! password changed!";
+			String message="your password was changed";
+			message = message.replace("\n", "<br/>");
+				
+				e.setFrom("crmsystemspvtltd@gmail.com");
+				
+				e.setUsername("crmsystemspvtltd");
+				e.setPassword("Dada@3232");
+				String username=e.getUsername();
+				String password=e.getPassword();
+				String from=e.getFrom();
+			props.put("mail.smtp.host","smtp.gmail.com");
+			props.put("mail.smtp.auth","true");
+			props.put("mail.smtp.port","465");
+			props.put("mail.smtp.socketFactory.class","javax.net.ssl.SSLSocketFactory");
+			props.put("mail.smtp.socketFactory.port","465");
+			props.put("mail.smtp.socketFactory.fallback","false");
+			Session mailSession=Session.getDefaultInstance(props,null);
+			mailSession.setDebug(true);
+			Message mailMessage=new MimeMessage(mailSession);
+			mailMessage.setFrom(new InternetAddress(from));
+			mailMessage.setRecipient(Message.RecipientType.TO, new InternetAddress(to));
+			mailMessage.setContent(message,"text/html");
+			mailMessage.setSubject(subject);
+			Transport transport=mailSession.getTransport("smtp");
+			transport.connect("smtp.gmail.com",username,password);
+			transport.sendMessage(mailMessage,mailMessage.getAllRecipients());
+			
+			
+			}
+			catch(Exception ex)
+			{
+				System.out.println(ex);
+			}
+	
+	HttpSession httpSession = request.getSession();
+    httpSession.invalidate();
+    theModel.addAttribute("accountusers",new Accountuser());
+	String m="";
+	theModel.addAttribute("message",m);
+	return "accountuserlogin";}
+	else {
+		String m="wrong old password";
+		theModel.addAttribute("message",m);
+		return "accountUserChangePassword";
+	}
+	}
 
 @RequestMapping("/pendingPayments")
 public String ShowPendingPaymentsPage(Model theModel,@ModelAttribute("id") String idacuser) throws Exception {

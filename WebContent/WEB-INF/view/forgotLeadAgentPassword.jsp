@@ -43,6 +43,7 @@ body{
 <label for="id">Sales ID:</label> <form:input class="form-control" path="leaduserid"/><br/>
 <label for="emailid">emailid:</label><form:input  class="form-control" path="to1"/> <br/>
 <div class="row" align="center">
+<p style="color:red">${message}</p>
 <button type="submit" class="btn">submit</button>
 </div>
 

@@ -55,7 +55,7 @@ function resizeIframe(iframeID)
 	  	
     </ul>
     <ul class="nav navbar-nav navbar-right">
-      
+      <li><a href="http://localhost:8080/spring-crm/accountUserChangePassword"><span class="glyphicon glyphicon-edit"></span> Change Password</a></li>
       <li><a href="http://localhost:8080/spring-crm/logout"><span class="glyphicon glyphicon-log-out"></span> Logout</a></li>
     </ul>
   </div>

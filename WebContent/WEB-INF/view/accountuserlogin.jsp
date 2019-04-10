@@ -44,9 +44,7 @@ body{
 <div class="row" align="center">
 <p style="color:red">${message}</p>
 <button type="submit" class="btn">submit</button>
-<form:form action="AccountUserPage" modelAttribute="accountusers">
-<button type="submit" class="btn">forgot password?</button>
-</form:form>
+<button type="button" onclick="window.location.href='accountUserForgotPassword'" class="btn">Forgot Password</button>
 </div>
 
 </div>
