@@ -12,6 +12,7 @@ import javax.persistence.Transient;
 import org.hibernate.annotations.Cache;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
 import java.io.Serializable;
+import java.sql.Date;
 @Entity
 @Table(name="leadagentuser")
 public class LeadAgentUser implements Serializable {
@@ -60,6 +61,17 @@ private String useremail;
 @Column(name="emailpassword")
 private String emailpassword;
 
+@Column(name="doj")
+private Date doj;
+
+
+public Date getDoj() {
+	return doj;
+}
+
+public void setDoj(Date doj) {
+	this.doj = doj;
+}
 
 public String getAgentid() {
 	return agentid;

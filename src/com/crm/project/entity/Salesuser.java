@@ -49,6 +49,28 @@ private String useremail;
 @Column(name="emailpassword")
 private String emailpassword;
 
+@Column(name="doj")
+private Date doj;
+
+@Column(name="preminlead")
+private int preminlead;
+
+public Date getDoj() {
+	return doj;
+}
+
+public void setDoj(Date doj) {
+	this.doj = doj;
+}
+
+public int getPreminlead() {
+	return preminlead;
+}
+
+public void setPreminlead(int preminlead) {
+	this.preminlead = preminlead;
+}
+
 public String getUseremail() {
 	return useremail;
 }

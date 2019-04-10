@@ -51,7 +51,7 @@ function resizeIframe(iframeID)
       
       
      
-	  <li><a href="#">Reports</a></li>
+	
 	  	
     </ul>
     <ul class="nav navbar-nav navbar-right">

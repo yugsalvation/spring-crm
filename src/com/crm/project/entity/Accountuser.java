@@ -143,5 +143,27 @@ public class Accountuser {
 	@Column(name="emailpassword")
 	private String emailpassword;
 	
+	@Column(name="doj")
+	private Date doj;
+	
+	@Column(name="preminorder")
+	private int preminorder;
+
+	public Date getDoj() {
+		return doj;
+	}
+
+	public void setDoj(Date doj) {
+		this.doj = doj;
+	}
+
+	public int getPreminorder() {
+		return preminorder;
+	}
+
+	public void setPreminorder(int preminorder) {
+		this.preminorder = preminorder;
+	}
+	
 
 }

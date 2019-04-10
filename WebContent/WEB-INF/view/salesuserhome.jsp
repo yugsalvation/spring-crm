@@ -50,7 +50,7 @@ function resizeIframe(iframeID)
       <li><a href="javascript:loadFrame('customer')">Customers</a></li>
      
 	  <li><a href="javascript:loadFrame('salesMyOpportunities')">Opportunity</a></li>
-	  <li><a href="#">Reports</a></li>
+	
 	  	
     </ul>
     <ul class="nav navbar-nav navbar-right">

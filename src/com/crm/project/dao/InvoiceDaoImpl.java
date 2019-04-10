@@ -23,6 +23,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.crm.project.Emails;
 import com.crm.project.InvoiceData;
 import com.crm.project.entity.Customer;
 import com.crm.project.entity.Invoice;
@@ -31,6 +32,8 @@ import com.crm.project.entity.Product;
 import com.itextpdf.text.Document;
 import com.itextpdf.text.DocumentException;
 import com.itextpdf.text.Element;
+import com.itextpdf.text.Font;
+import com.itextpdf.text.Font.FontFamily;
 import com.itextpdf.text.Paragraph;
 import com.itextpdf.text.Rectangle;
 import com.itextpdf.text.pdf.PdfPCell;
@@ -51,6 +54,8 @@ public class InvoiceDaoImpl implements InvoiceDao {
 	@Autowired
 	ProductDao productdao;
 	
+	@Autowired
+	AccountuserDao accountuserdao;
 	
 	@Override
 	@Transactional
@@ -184,6 +189,7 @@ public class InvoiceDaoImpl implements InvoiceDao {
 		 String city;
 		 String billdate;
 		 String duedate;
+		 
 		Session currentSession=sessionFactory.getCurrentSession();
 		String query="from Invoice i where i.idinvoice=\'"+invoiceid+"\'";
 		Query <Invoice> theQuery=currentSession.createQuery(query,Invoice.class);
@@ -214,6 +220,7 @@ public class InvoiceDaoImpl implements InvoiceDao {
 		ind.setTotal(total);
 		ind.setIdinvoice(idinvoice);
 		ind.setCity(city);
+		Emails e=accountuserdao.getEmailsid(o.getAccountusers());
 		
 		Document d=new Document();
 		try {
@@ -296,18 +303,24 @@ public class InvoiceDaoImpl implements InvoiceDao {
 			bill.addCell(bcell6);
 			bill.addCell(bcell7);
 			bill.addCell(bcell8);
-			
+			bill.setSpacingAfter(15f);
 			d.add(heading);
 			d.add(customer);
 			d.add(bill);
+			d.add(new Paragraph("THE DUE DATE FOR YOUR PAYMENT IS:"+o.getDuedate()));
+			Paragraph ps=new Paragraph("After payment send ref number to:"+e.getFrom());
+			Font f=new Font(FontFamily.TIMES_ROMAN,10f);
+			ps.setFont(f);
+		
+			d.add(ps);
 			d.close();
 			writer.close();
 		}
-		catch(DocumentException e) {
-			e.printStackTrace();
+		catch(DocumentException ex) {
+			ex.printStackTrace();
 		}
-		catch(FileNotFoundException e) {
-			e.printStackTrace();
+		catch(FileNotFoundException ex) {
+			ex.printStackTrace();
 		}
 		
 	}

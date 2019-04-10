@@ -49,6 +49,28 @@ public class SalesExecutiveuser {
 	@Column(name="emailpassword")
 	private String emailpassword;
 
+	@Column(name="doj")
+	private Date doj;
+	
+	@Column(name="preminopp")
+	private int preminopp;
+		
+	public Date getDoj() {
+		return doj;
+	}
+
+	public void setDoj(Date doj) {
+		this.doj = doj;
+	}
+
+	public int getPreminopp() {
+		return preminopp;
+	}
+
+	public void setPreminopp(int preminopp) {
+		this.preminopp = preminopp;
+	}
+
 	public String getUseremail() {
 		return useremail;
 	}

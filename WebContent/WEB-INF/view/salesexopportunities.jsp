@@ -69,11 +69,13 @@ body{
     <c:url var="dropopp" value="/dropsalesexopportunity">
     	<c:param name="opportunityid" value="${opp.opportunityid}"></c:param>
     </c:url>
-    
+    <c:url var="viewopp" value="/salesexSearchOpportunity">
+    	<c:param name="oid" value="${opp.opportunityid}"></c:param>
+    </c:url>
      
     
       <tr class="active">
-        <td>${opp.opportunityid} </td>
+        <td><a href="${viewopp}">${opp.opportunityid} </a></td>
         <td>${opp.names} ${opp.names2}</td>
         <td>${opp.walking_date}</td>
         <td>${opp.emailid}</td>
