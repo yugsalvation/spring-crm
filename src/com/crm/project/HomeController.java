@@ -251,6 +251,8 @@ public String ShowProcessSalesChangePasswordPage(Model theModel,@ModelAttribute(
 		return "salesChangePassword";
 	}
 	}
+@Autowired
+private LeadsDao leadsdao;
 @RequestMapping("/SalesLeadPage")
 public String ShowSalesLeadPage(Model theModel,@ModelAttribute("id") String id) {
 	List<Leads>l=leadsdao.getSalesLeads(id); 
@@ -345,6 +347,24 @@ public void ShowSalesGetOppReportsPage(Model theModel,@ModelAttribute("id") Stri
 	response.addHeader("content-disposition", "attachment; filename="+from+"_"+to+".pdf");
 	String dataDirectory = request.getServletContext().getRealPath("/WebContent/resources/");
 	Path file = Paths.get("C:/Users/charm/eclipse-workspace/spring-crm/WebContent/resources/reports/salesemployee/"+sid+"/OPPORTUNITY/", from+"_"+to+".pdf");
+	try
+    {
+        Files.copy(file, response.getOutputStream());
+        response.getOutputStream().flush();
+    }
+    catch (IOException ex) {
+        ex.printStackTrace();
+    }
+	
+
+}
+
+@RequestMapping("/getSalesLeadsReports")
+public void ShowSalesGetLeadsReportsPage(Model theModel,@ModelAttribute("id") String sid,@RequestParam("from")java.sql.Date from,@RequestParam("to")java.sql.Date to,HttpServletRequest request,HttpServletResponse response) throws Exception {
+	String x=leadsdao.getSLeadsReport(sid, from, to);response.setContentType("application/pdf");
+	response.addHeader("content-disposition", "attachment; filename="+from+"_"+to+".pdf");
+	String dataDirectory = request.getServletContext().getRealPath("/WebContent/resources/");
+	Path file = Paths.get("C:/Users/charm/eclipse-workspace/spring-crm/WebContent/resources/reports/salesemployee/"+sid+"/LEADS/", from+"_"+to+".pdf");
 	try
     {
         Files.copy(file, response.getOutputStream());
@@ -1126,8 +1146,7 @@ public String ShowAddLeadPage(Model theModel) {
 	theModel.addAttribute("newlead",nl);
 	return "addlead";
 }
-@Autowired
-private LeadsDao leadsdao;
+
 @RequestMapping("/processlead")
 public String ProcessLeadPage(@ModelAttribute("newlead") Leads u,Model theModel,@ModelAttribute("id") String id) throws Exception {
 	String minlead=salesuserdao.lessLeadSalesuser();
@@ -1164,6 +1183,31 @@ public String ProcessUpdateLeadPage(@ModelAttribute("newlead") Leads lead,Model 
 	return "lead";
 }
 
+@RequestMapping("/getLAReports")
+public String ShowGetLAReportsPage(Model theModel,@ModelAttribute("id") String luserid) throws Exception {
+	
+	
+	return "getLAReports";
+}
+
+
+@RequestMapping("/getLALeadsReports")
+public void ShowGetLALeadsReportsPage(Model theModel,@ModelAttribute("id") String luserid,@RequestParam("from")java.sql.Date from,@RequestParam("to")java.sql.Date to,HttpServletRequest request,HttpServletResponse response) throws Exception {
+	String x=leadsdao.getLAReport(luserid, from, to);response.setContentType("application/pdf");
+	response.addHeader("content-disposition", "attachment; filename="+from+"_"+to+".pdf");
+	String dataDirectory = request.getServletContext().getRealPath("/WebContent/resources/");
+	Path file = Paths.get("C:/Users/charm/eclipse-workspace/spring-crm/WebContent/resources/reports/leadagent/"+luserid+"/", from+"_"+to+".pdf");
+	try
+    {
+        Files.copy(file, response.getOutputStream());
+        response.getOutputStream().flush();
+    }
+    catch (IOException ex) {
+        ex.printStackTrace();
+    }
+	
+
+}
 
 @RequestMapping("/accountuserlogin")
 public String ShowAccountUserLoginPage(Model theModel) {

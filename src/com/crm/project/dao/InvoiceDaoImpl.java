@@ -248,7 +248,7 @@ public class InvoiceDaoImpl implements InvoiceDao {
 			PdfPCell ccell3=new PdfPCell(new Paragraph("Customer Id:"+ind.getCid()));
 			ccell3.setBorder(Rectangle.NO_BORDER);
 			ccell3.setColspan(2);
-			PdfPCell ccell4=new PdfPCell(new Paragraph(""));
+			PdfPCell ccell4=new PdfPCell(new Paragraph("Order Id:"+o.getIdorder()));
 			ccell4.setBorder(Rectangle.NO_BORDER);
 			PdfPCell ccell5=new PdfPCell(new Paragraph(ind.getAddress1()+",\n"+ind.getAddress2()+",\n"+ind.getCity()));
 			ccell5.setBorder(Rectangle.NO_BORDER);

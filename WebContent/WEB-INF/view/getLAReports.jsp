@@ -28,8 +28,8 @@ body{
 <div class="col-sm-2"></div>
 <div class="col-sm-8">
 <div class=row>
- <h1 style="text-align:center;">Opportunity Report</h1>
-<form:form action="getSalesOppReports" class="form-inline">
+ <h1 style="text-align:center;">My Leads Report</h1>
+<form:form action="getLALeadsReports" class="form-inline">
 
 
   <div class="form-group">
@@ -49,29 +49,12 @@ body{
   <br/>
   <br/>
   <br/>
-  <div class=row>
- <h1 style="text-align:center;">Leads Report</h1>
-<form:form action="getSalesLeadsReports" class="form-inline">
-
-
-  <div class="form-group">
-    <label for="from">From:</label>
-    <input type="date" class="form-control" name="from" required="required">
-  </div>
-  <div class="form-group">
-   <label for="to">To:</label>
-    <input type="date" class="form-control" name="to" required="required">
-  </div>
   
-  <button type="submit" class="btn btn-default">Get Report</button>
-
-</form:form>
-
   </div>
+    <div class="col-sm-2"></div>
   </div>
-  </div>
-  <div class="col-sm-2"></div>
 
-</div>
+
+
 </body>
 </html>

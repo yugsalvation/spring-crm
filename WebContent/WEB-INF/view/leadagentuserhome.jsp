@@ -47,6 +47,7 @@ function resizeIframe(iframeID)
       <li class="active"><a href="#">Home</a></li>
       <li><a href="javascript:loadFrame('addlead')">Add Lead</a></li>
        <li><a href="javascript:loadFrame('lead')">My Leads</a></li>
+         <li><a href="javascript:loadFrame('getLAReports')">Reports</a></li>
       
 	
 	  	
