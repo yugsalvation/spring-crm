@@ -36,7 +36,7 @@ body{
  <form class="form-inline" action="salesexSearchOpportunity" >
   <div class="form-group">
     
-    <input type="text" class="form-control" name="oid" placeholder="oid">
+    <input type="text" class="form-control" name="oid" placeholder="enter oid or fname or emailid or city">
   </div>
   
 
@@ -69,7 +69,7 @@ body{
     <c:url var="dropopp" value="/dropsalesexopportunity">
     	<c:param name="opportunityid" value="${opp.opportunityid}"></c:param>
     </c:url>
-    <c:url var="viewopp" value="/salesexSearchOpportunity">
+    <c:url var="viewopp" value="/salesexViewOpportunity">
     	<c:param name="oid" value="${opp.opportunityid}"></c:param>
     </c:url>
      

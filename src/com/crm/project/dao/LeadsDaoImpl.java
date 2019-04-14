@@ -74,6 +74,9 @@ public class LeadsDaoImpl implements LeadsDao {
 		
 	}
 	
+	@Autowired
+	OpportunityDao opportunitydao;
+	
 	@Override
 	@Transactional
 	public void updateLead(Leads l,String leadid)
@@ -82,7 +85,18 @@ public class LeadsDaoImpl implements LeadsDao {
 		String query="update Leads set names=\'"+l.getNames()+"\',names2=\'"+l.getNames2()+"\',walking_date=\'"+l.getWalking_date()+"\',emailid=\'"+l.getEmailid()+"\',contact_number="+l.getContact_number()+",city=\'"+l.getCity()+"\' where leadid=\'"+leadid+"\'";
 		Query theQuery=currentSession.createQuery(query);
 		int result=theQuery.executeUpdate();
-		
+		Leads l2=getLead(leadid);
+		if(l2.getOpp()==1) {
+			Opportunity o=new Opportunity();
+			o.setNames(l2.getNames());
+			o.setNames2(l2.getNames2());
+			o.setWalking_date(l2.getWalking_date());
+			o.setEmailid(l2.getEmailid());
+			o.setContact_number(l2.getContact_number());
+			o.setCity(l2.getCity());
+			opportunitydao.updateLeadOpportunity(o, leadid);
+			
+		}
 	}
 
 	@Override

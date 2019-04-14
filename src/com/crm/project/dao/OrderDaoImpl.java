@@ -24,7 +24,7 @@ public class OrderDaoImpl implements OrderDao {
 	public void addOrder(Order o) throws Exception{
 		Session currentSession=sessionFactory.getCurrentSession();
 		
-		
+		o.setPayment("PENDING");
 		o.setIdorder("hello");
 		currentSession.save(o);
 

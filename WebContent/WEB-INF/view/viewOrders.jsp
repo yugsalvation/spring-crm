@@ -22,7 +22,8 @@ body{
 </head>
 <body >
 <div class="container-fluid">
-<table class="table" style="margin-top:15%" >
+<h1 style="text-align:center;">Order History</h1>
+<table class="table" style="margin-top:3%" >
     <thead>
       <tr class="active">
         <th>Order Id</th>

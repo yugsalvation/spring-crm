@@ -201,5 +201,34 @@ public class CustomerDaoImpl implements CustomerDao {
 		int count=o.size();
 		return count;
 	}
+	@Override
+	@Transactional
+	public void addAddressProof(String path, String cid) {
+		Session currentSession=sessionFactory.getCurrentSession();
+		String query="update Customer set addressproof=\'"+path+"\' where cid="+"\'"+cid+"\'";
+		Query thequery=currentSession.createQuery(query);
+		int result=thequery.executeUpdate();
+		
+	}
+	@Override
+	@Transactional
+	public void updateCustomer(Customer c) {
+		Session currentSession=sessionFactory.getCurrentSession();
+		String query="update Customer set fname=\'"+c.getFname()+"\',lname=\'"+c.getLname()+"\',signupdate=\'"+c.getSignupdate()+"\',emailid=\'"+c.getEmailid()+"\',contact_number=\'"+c.getContact_number()+"\',address1=\'"+c.getAddress1()+"\',address2=\'"+c.getAddress2()+"\',city=\'"+c.getCity()+"\' where cid="+"\'"+c.getCid()+"\'";
+		Query thequery=currentSession.createQuery(query);
+		int result=thequery.executeUpdate();
+		
+	}
+	
+	@Override
+	@Transactional
+	public List<Customer> getSearchSalesexCustomers(String seid, String key) {
+		Session currentSession=sessionFactory.getCurrentSession();
+		key="%"+key+"%";
+		String query="from Customer o where o.seuserid=\'"+seid+"\' and (cid like \'"+key+"\' or fname like \'"+key+"\' or lname like \'"+key+"\' or emailid like \'"+key+"\' or city like \'"+key+"\') and dropp=0";
+		Query <Customer> theQuery=currentSession.createQuery(query,Customer.class);
+		List<Customer>c=theQuery.getResultList();
+		return c;
+	}
 
 }

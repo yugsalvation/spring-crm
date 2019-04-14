@@ -23,6 +23,19 @@ body{
 <body >
 <div class="container-fluid">
    <h1 style="text-align:center;">MY CUSTOMERS</h1>
+   <div class="container-fluid" style="margin-top:3%;text-align:center">
+ 
+ <form class="form-inline" action="salesexSearchCustomer" >
+  <div class="form-group">
+    
+    <input type="text" class="form-control" name="key" placeholder="enter cid or fname or emailid or city">
+  </div>
+  
+
+  <button type="submit" class="btn btn-default">Search</button>
+</form>
+ 
+ </div>
 <table class="table" style="margin-top:3%" >
     <thead>
       <tr class="active">
@@ -30,8 +43,9 @@ body{
         <th>Name</th>
         <th>Signup date</th>
         <th>Email id</th>
-        <th>Contact number</th>
+        <th>Contact</th>
         <th>City</th>
+        <th>IdProof</th>
         <th></th>
         <th></th>
         <th></th>
@@ -49,26 +63,32 @@ body{
     
     <c:url var="uploadFile" value="/uploadFile">
     	<c:param name="cid" value="${customers.cid}"></c:param></c:url>	
+    <c:url var="update" value="/updateCustomer">
+    	<c:param name="cid" value="${customers.cid}"></c:param></c:url>	
     <c:url var="dropopp" value="/dropopportunity">
     	<c:param name="opportunityid" value="${customers.cid}"></c:param>
     </c:url>
-    
+    <c:url var="getcustomer" value="/viewCustomer">
+    	<c:param name="cid" value="${customers.cid}"></c:param>
+    </c:url>
    
     
       <tr class="active">
-        <td>${customers.cid} </td>
+        <td><a href="${getcustomer}">${customers.cid}</a></td>
         <td>${customers.fname} ${customers.lname}</td>
         <td>${customers.signupdate}</td>
         <td>${customers.emailid}</td>
         <td>${customers.contact_number}</td>
         <td>${customers.city}</td>
      
-        <td> <a href="${uploadFile}">uploadFile</a></td>
+        <td style="text-align:center;"> <a href="${uploadFile}"><span class="glyphicon glyphicon-upload"></span></a></td>
+        <td> <a href="${update}"><span class="glyphicon glyphicon-edit"></span></a></td>
 
       	<td> <a href="${addOrder}">add order</a></td>
        
-        <td> <a href="${dropopp}" onclick="return myFunction()">drop</a></td>
+       
       	<td><a href="${vieworders}">Order History</a></td>
+      	 <td> <a href="${dropopp}" onclick="return myFunction()"><span class="glyphicon glyphicon-remove"></span></a></td>
       </tr>
      </c:forEach>
     </tbody>
@@ -79,8 +99,8 @@ body{
 	<script>
 function myFunction() {
   var txt;
-  if (confirm("are you sure to drop opportunity?!")) {
-  
+  if (confirm("are you sure to delete customer?!")) {
+  			
   } else {
 	return false;
   }

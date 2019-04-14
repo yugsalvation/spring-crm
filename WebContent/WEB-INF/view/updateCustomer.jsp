@@ -22,28 +22,32 @@ body{
 </head>
 <body >
 <div class="container-fluid">
-<form:form action="processAddCustomer" modelAttribute="newcustomer" style="padding:2%">
+<form:form action="processUpdateCustomer" modelAttribute="newcustomer" style="padding:2%">
    <div class="form-group">
-    
-<label for="fname">First Name:</label> <form:input class="form-control" path="fname" value='${newcustomer.fname}' required="required" /><br/>
-<label for="lname">Last Name:</label> <form:input class="form-control" path="lname" value='${newcustomer.lname}' required="required"/><br/>
+ <label for="cid">Cid:</label> <form:input class="form-control" path="cid" value='${newcustomer.cid}' readonly="true"/> <br/>
+<label for="fname">First Name:</label> <form:input class="form-control" path="fname" value='${newcustomer.fname}' onkeydown="upperCaseF(this)" required="required" /><br/>
+<label for="lname">Last Name:</label> <form:input class="form-control" path="lname" value='${newcustomer.lname}' onkeydown="upperCaseF(this)" required="required"/><br/>
 <label for="signup_date">Signup date:</label><form:input type="date"  class="form-control" path="signupdate" value='${newcustomer.signupdate}' required="required"/> <br/>
 <label for="emailid">Email id:</label> <form:input class="form-control" path="emailid" value='${newcustomer.emailid}' required="required"/><br/>
-<label for="address1">address line 1:</label> <form:input class="form-control" path="address1" required="required"/><br/>
-<label for="address2">address line 2:</label> <form:input class="form-control" path="address2" required="required"/><br/>
-<label for="city">City:</label> <form:input class="form-control" path="city"/><br/>
+<label for="address1">address line 1:</label> <form:input class="form-control" path="address1" onkeydown="upperCaseF(this)" required="required"/><br/>
+<label for="address2">address line 2:</label> <form:input class="form-control" path="address2" onkeydown="upperCaseF(this)" required="required"/><br/>
+<label for="city">City:</label> <form:input class="form-control" onkeydown="upperCaseF(this)" path="city"/><br/>
 <label for="contact_number">Contact number:</label> <form:input class="form-control" type="tel" path="contact_number" value='${newcustomer.contact_number}' required="required"/><br/>
- <form:input class="form-control" path="salesuserid" type="hidden" value='${newcustomer.salesuserid}'/><br/>
- <form:input class="form-control" path="seuserid" type="hidden" value='${newcustomer.seuserid}'/><br/>
-  <form:input class="form-control" path="oppid" type="hidden" value='${newcustomer.oppid}'/><br/>
- <input type="hidden" name="tid" value="${tid}">
+
 
 
 <br/>
 
-<button type="submit" class="btn" style="background-color:rgb(0,0,0,0.8); color:white">Create Customer</button>
+<button type="submit" class="btn" style="background-color:rgb(0,0,0,0.8); color:white">Update Customer</button>
 </div>
 </form:form>
 </div>
+<script>
+function upperCaseF(a){
+    setTimeout(function(){
+        a.value = a.value.toUpperCase();
+    }, 1);
+}
+</script>
 </body>
 </html>

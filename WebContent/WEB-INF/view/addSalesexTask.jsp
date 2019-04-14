@@ -26,7 +26,7 @@ body{
    <div class="form-group">
     
 <label for="names">Fname:</label><form:input  class="form-control" path="names" value="${opp.names}" readonly="true"/> <br/>
-<label for="names">Lname:</label><form:input  class="form-control" path="names" value="${opp.names2}" readonly="true"/> <br/>
+<label for="names">Lname:</label><form:input  class="form-control" path="names2" value="${opp.names2}" readonly="true"/> <br/>
 <label for="oid">OID:</label><form:input  class="form-control" path="oid" value="${opp.opportunityid}" readonly="true"/> <br/>
 
 <label for="seuser">Sales Executive id:</label> <form:input class="form-control" value="${id}" path="seuser" readonly="true"/><br/>
@@ -35,7 +35,7 @@ body{
 <label for="dor">Date of Reminder:</label><form:input type="date"  class="form-control" path="dor" /> <br/>
 <label for="description">Description</label><br/> <form:textarea rows="20" cols="90" path="description"/><br/>
 
-<button type="submit" class="btn" style="background-color:rgb(0,0,0,0.8); color:white">Create Lead</button>
+<button type="submit" class="btn" style="background-color:rgb(0,0,0,0.8); color:white">Create Task</button>
 </div>
 </form:form>
 </div>

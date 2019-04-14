@@ -103,6 +103,16 @@ public class OpportunityDaoImpl implements OpportunityDao {
 		int result=theQuery.executeUpdate();
 
 	}
+	
+	@Override
+	@Transactional
+	public void updateLeadOpportunity(Opportunity o, String leadid) {
+		Session currentSession=sessionFactory.getCurrentSession();
+		String query="update Opportunity set names=\'"+o.getNames()+"\',names2=\'"+o.getNames2()+"\',contact_number=\'"+o.getContact_number()+"\',city=\'"+o.getCity()+"\',emailid=\'"+o.getEmailid()+"\',walking_date=\'"+o.getWalking_date()+"\' where lid=\'"+leadid+"\'";
+		Query theQuery=currentSession.createQuery(query);
+		int result=theQuery.executeUpdate();
+		
+	}
 
 	@Override
 	@Transactional
@@ -433,6 +443,19 @@ public class OpportunityDaoImpl implements OpportunityDao {
 		int count=o.size();
 		return count;
 	}
+
+	@Override
+	@Transactional
+	public List<Opportunity> getSearchSexopportunity(String id,String key) {
+		Session currentSession=sessionFactory.getCurrentSession();
+		key="%"+key+"%";
+		String query="from Opportunity o where o.sexuserid=\'"+id+"\' and (opportunityid like \'"+key+"\' or names like \'"+key+"\' or names2 like \'"+key+"\' or emailid like \'"+key+"\' or city like \'"+key+"\') and customer=0 and dropp=0";
+		Query <Opportunity> theQuery=currentSession.createQuery(query,Opportunity.class);
+		List<Opportunity>o=theQuery.getResultList();
+		return o;
+	}
+
+	
 
 	
 

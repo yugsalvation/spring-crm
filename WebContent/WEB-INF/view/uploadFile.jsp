@@ -25,7 +25,7 @@ body{
 <form:form action="processUploadFile" enctype="multipart/form-data">
   <div class="form-group">
     <label for="cid">Customer Id::</label>
-    <input type="text" class="form-control" name="cid" value="${cid}">
+    <input type="text" class="form-control" name="cid" value="${cid}" readonly="true">
   </div>
   <div class="form-group">
     <label for="customeridproof">ID proof:</label>

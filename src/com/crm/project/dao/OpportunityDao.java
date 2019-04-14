@@ -11,10 +11,12 @@ import com.crm.project.entity.Opportunity;
 public interface OpportunityDao {
 	public List<Opportunity> getOpportunities(String id);
 	public List<Opportunity> getSexopportunity(String id);
+	public List<Opportunity> getSearchSexopportunity(String id,String key);
 	public List<Opportunity> getSexDateopportunity(String id,Date from,Date to);
 	public void addOpportunity(Leads lead,String salesuserid) throws Exception;
 	public Opportunity getOpportunity(String id);
 	public void updateOpportunity(Opportunity o,String opportunityid);
+	public void updateLeadOpportunity(Opportunity o,String leadid);
 	public void dropOpportunity(Opportunity o,String opportunityid);
 	public void addSexeuser(String oid,String sexid);
 	public void addCustomer(String oid);

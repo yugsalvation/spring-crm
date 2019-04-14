@@ -571,21 +571,34 @@ public String ProcessSalesexDropOpportunityPage(@ModelAttribute("newopportunity"
 	String oid=o.getOpportunityid();
 
 	opportunitydao.dropOpportunity(o,oid);
-	List<Opportunity> opp=opportunitydao.getOpportunities(seid);
+	List<Opportunity> opp=opportunitydao.getSexopportunity(seid);
 	theModel.addAttribute("myopp",opp);
 	
 	return "salesexopportunities";
 }
 
 @RequestMapping("/salesexSearchOpportunity")
-public String ShowSalesexSearchOpportunityPage(Model theModel,@ModelAttribute("id") String seid,@RequestParam("oid")String id) throws Exception {
+public String ShowSalesexSearchOpportunityPage(Model theModel,@ModelAttribute("id") String seid,@RequestParam("oid")String key) throws Exception {
+	
+	List<Opportunity> opp=opportunitydao.getSearchSexopportunity(seid, key);
+	theModel.addAttribute("myopp",opp);
+	
+	return "salesexopportunities";
+	
+	
+}
 
+@RequestMapping("/salesexViewOpportunity")
+public String ShowSalesexViewOpportunityPage(Model theModel,@ModelAttribute("id") String seid,@RequestParam("oid")String id) throws Exception {
+	
 	Opportunity o=opportunitydao.getOpportunity(id);
+	
 	theModel.addAttribute("newopportunity",o);
 	
 	return "viewopportunity";
+	
+	
 }
-
 
 
 
@@ -786,6 +799,21 @@ public String ShowProcessAddCustomerPage(Model theModel,@ModelAttribute("id") St
 	return "salesexecutivehome";
 }
 
+@RequestMapping("/updateCustomer")
+public String ShowUpdateCustomerPage(Model theModel,@ModelAttribute("id") String seid,@RequestParam("cid")String cid) throws Exception {
+
+	Customer c=customerdao.getCustomer(cid);
+	theModel.addAttribute("newcustomer",c);
+	return "updateCustomer";
+}
+@RequestMapping("/processUpdateCustomer")
+public String ShowProcessUpdateCustomerPage(Model theModel,@ModelAttribute("id") String seid,@ModelAttribute("newcustomer") Customer c) throws Exception {
+	customerdao.updateCustomer(c);
+	List<Customer> mycustomers=customerdao.getSalesexCustomers(seid);
+	theModel.addAttribute("mycustomers",mycustomers);
+	return "mycustomers";
+}
+
 @RequestMapping("/mySalesexCustomers")
 public String ShowMySalesexCustomersPage(Model theModel,@ModelAttribute("id") String seid) throws Exception {
 
@@ -794,6 +822,17 @@ public String ShowMySalesexCustomersPage(Model theModel,@ModelAttribute("id") St
 	
 	
 	return "mycustomers";
+}
+@RequestMapping("/salesexSearchCustomer")
+public String ShowSalesexSearchCustomerPage(Model theModel,@ModelAttribute("id") String seid,@RequestParam("key")String key) throws Exception {
+	
+	List<Customer> mycustomers=customerdao.getSearchSalesexCustomers(seid, key);
+	theModel.addAttribute("mycustomers",mycustomers);
+	
+	
+	return "mycustomers";
+	
+	
 }
 
 @RequestMapping("/uploadFile")
@@ -814,6 +853,9 @@ public String ShowProcessUploadFilePage(Model theModel,@ModelAttribute("id") Str
 			BufferedOutputStream stream=new BufferedOutputStream(new FileOutputStream(serverFile));
 			stream.write(bytes);
 			stream.close();
+			String path="C:/Users/charm/eclipse-workspace/spring-crm/WebContent/resources/customeridproof/"+cid+".pdf";
+			customerdao.addAddressProof(path, cid);
+			
 		}
 		catch(Exception e) {
 			

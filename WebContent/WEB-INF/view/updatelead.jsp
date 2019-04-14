@@ -28,7 +28,7 @@ body{
 <label for="names">First Name:</label> <form:input class="form-control" path="names" onkeydown="upperCaseF(this)" required="required"/><br/>
 <label for="names2">Last Name:</label> <form:input class="form-control" path="names2" onkeydown="upperCaseF(this)" required="required"/><br/>
 <label for="walking_date">Walking date:</label><form:input type="date"  class="form-control" path="walking_date" required="required" /> <br/>
-<label for="emailid">Email id:</label> <form:input class="form-control" path="emailid" onkeydown="upperCaseF(this)" required="required"/><br/>
+<label for="emailid">Email id:</label> <form:input class="form-control" path="emailid"  required="required"/><br/>
 <label for="contact_number">Contact number:</label> <form:input class="form-control" type="tel" path="contact_number" onkeydown="upperCaseF(this)" required="required"/><br/>
 <label for="leadsource">Lead Source:</label> <form:input class="form-control" path="leadsource" onkeydown="upperCaseF(this)" required="required"/><br/>
 
